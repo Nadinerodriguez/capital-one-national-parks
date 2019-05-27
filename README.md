@@ -1,10 +1,47 @@
-# Capital One Summer Engineering Summit
+# Capital One Software Engineering Summit (Summer 2019)
 
 ## Description
 
-Build a web app that serves as a National Park Service information kiosk
+**Challenge:** Build a web app that serves as a National Park Service information kiosk
 
 **Link:** https://www.mindsumo.com/contests/national-park-api
+
+## Tech Stack
+
+**Backend:**
+- Django
+- National Park's API
+
+**FrontEnd:**
+- HTML
+- CSS
+- JavaScript
+- jQuery
+- Bootstrap
+
+## Features
+
+**Required:**
+- [ ] Filtering
+    - State
+    - Designations
+- [ ] Searching
+    - Name
+    - Keyword
+- [ ] Destination
+    - Alerts
+    - Articles
+    - Events
+    - News Release
+- [ ] Detail
+    - Visitor centers
+    - Campgrounds
+    - Lesson plans
+    - People
+
+**Stretch:**
+- [ ] Map Visualizations
+- [ ] NPS Relevant Symbols
 
 ## License 
 Copyright 2019 Nadine Rodriguez
