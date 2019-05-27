@@ -8,11 +8,11 @@
 
 ## Tech Stack
 
-###Backend:
+### Backend:
 - Django
 - National Park's API
 
-###FrontEnd:
+### FrontEnd:
 - HTML
 - CSS
 - JavaScript
@@ -21,7 +21,7 @@
 
 ## Features
 
-###Required:
+### Required:
 - [ ] Filtering
     - State
     - Designations
@@ -39,7 +39,7 @@
     - Lesson plans
     - People
 
-###Stretch:
+### Stretch:
 - [ ] Map Visualizations
 - [ ] NPS Relevant Symbols
 
