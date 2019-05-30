@@ -1,12 +1,11 @@
 """ This file holds all of the functions that interact with our API """
 import requests
+from . import api_keys
 
-#Global Variable
-# API_KEY = "BfjJkQ8FsI9gI33vN95G8f2tunWF5qZFYBZFOwb0"
 
 def find_parks(state_picked):
     """ Find parks from state code """
-    API_KEY = "BfjJkQ8FsI9gI33vN95G8f2tunWF5qZFYBZFOwb0"
+    API_KEY = api_keys.get_nps_api_key()
     # Parsing Parameters
 
     state_picked = state_picked.upper()
