@@ -66,11 +66,25 @@
           </a>
         </div>
       {% endif %}
-
     </div>
 
+
     <div class="col-md-8 col-xs-12">
-      <div class ="font-weight-bold" style="font-size: 24px;"><a href="">{{ location.fullName }}</a></div>
+      <!-- <div style="font-size: 24px;">
+        <a class="btn-link" href="{% url 'detail' %}?park-selected={{ location.parkCode }}">{{ location.fullName }}</a>
+      </div> -->
+
+      <div style="font-size: 24px;">
+        <form action="{% url 'detail' %}" method="post">
+          {% csrf_token %}
+          <!--  TODO: Maybe also pass in first image? -->
+          <input type='hidden' value='{{ location.parkCode }}' name='park-code'>
+          <input type='hidden' value='{{ location.latLong }}' name='lat-long'>
+          <input type='hidden' value='{{ location.fullName }}' name='full-name'>
+          <input type="submit" class="btn btn-outline-secondary btn-block" value="{{ location.fullName }}">
+        </form>
+      </div>
+
       <div class="text-dark text-uppercase font-italic" style="font-size: 13px;">{{ location.designation }}</div>
       <div class="text-muted font-weight-bold" style="font-size: 12px;">{{ location.states }}</div>
       <br>

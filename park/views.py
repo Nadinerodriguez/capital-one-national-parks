@@ -1,6 +1,6 @@
 from django.shortcuts import render
-import requests
 from django.http import HttpResponse
+from . import api_functions
 
 def test(request):
     return render(request,'park/test.html')
@@ -17,103 +17,53 @@ def results(request):
             return HttpResponse("Error. Please pick a state from the homepage")
 
         else:
-            context = find_parks_using_API(state_picked) # list of locations for state
+            context = api_functions.find_parks(state_picked) # list of locations for state
     return render(request, 'park/results.html', context)
 
-#Helper function that calls the API
-def find_parks_using_API(state_picked):
-    """ Helper function that calls the API """
-    # Parsing Parameters
-    state_picked = state_picked.upper()
-    API_KEY = "BfjJkQ8FsI9gI33vN95G8f2tunWF5qZFYBZFOwb0"
-    fields = "&fields=images"
-    url = "https://developer.nps.gov/api/v1/parks?stateCode=" + state_picked + "&api_key=" + API_KEY + fields
+# def detail(request):
+#     if request.method == "GET":
+#         park_selected = request.GET.get('park-selected')
+#
+#         #If user did not pick a park/Accessed url directly
+#         if park_selected is None:
+#             return HttpResponse("Error. Please pick a park from the results page")
+#
+#         else:
+#             print("A park was selected:", park_selected)
+#             pass
+#     return render(request, 'park/detail.html')
 
-    # API Call
-    response = requests.get(url)
-    json_object = response.json()
-    locations = json_object['data'] #Array of dictionaries
+def detail(request):
+    if request.method == "POST":
+        park_selected = request.POST.get('park-code')
+        lat_long = request.POST.get('lat-long')
+        full_name = request.POST.get('full-name')
 
-    # Convert abbreviation
-    state_name = convert_abbreviation_to_full(state_picked)
+        print("A park was selected!", park_selected)
+        print("Lat long:", lat_long)
+        print("Full name:", full_name)
+        print(lat_long == "")
 
-    return {
-        'state_name': state_name,
-        'locations':locations
-    }
+        # clean up lat_long string
+        if lat_long != "":
+            lat_long_arr = lat_long.split(", ")
+            lat = lat_long_arr[0][4:]
+            long = lat_long_arr[1][5:]
+            print("Lat: ", lat)
+            print("Long: ", long)
+        else: # If no lat long from api for this location
+            print("Empty lat and long")
+            lat = ""
+            long = ""
+    else:
+        return HttpResponse("Error accessing directly. Please pick a park from the results page.")
 
-    # Context to pass into template
-    # designation = json_object['designation']
-    # title = json_object['fullName']
-    # states = json_objects['states']
-    # description = json_object['description']
-    # images_array = json_object['images'] #Array of 5 images
-    # images_url_array = []
-    # for image_dict in images_array:
-    #     image_url = image_dict['url']
-    #     image_url_array.append(image_url)
-    #
-    # output = {
-    #     'designation': designation,
-    #     'title': title,
-    #     'states': states,
-    #     'description': description,
-    #     'images': images_url_array,
-    # }
-    #
-    # return output
+    # TODO: build context
+    access_token = api_keys.get_mapbox_access_token()
 
-def convert_abbreviation_to_full(state_abbrev):
-    states_dictionary = {
-        "AL": "Alabama",
-        "AK": "Alaska",
-        "AZ": "Arizona",
-        "AR": "Arkansas",
-        "CA": "California",
-        "CO": "Colorado",
-        "CT": "Connecticut",
-        "DE": "Delaware",
-        "FL": "Florida",
-        "GA": "Georgia",
-        "HI": "Hawaii",
-        "ID": "Idaho",
-        "IL": "Illinois",
-        "IN": "Indiana",
-        "IA": "Iowa",
-        "KS": "Kansas",
-        "KY": "Kentucky",
-        "LA": "Louisiana",
-        "ME": "Maine",
-        "MD": "Maryland",
-        "MA": "Massachusetts",
-        "MI": "Michigan",
-        "MN": "Minnesota",
-        "MS": "Mississippi",
-        "MO": "Missouri",
-        "MT": "Montana",
-        "NE": "Nebraska",
-        "NV": "Nevada",
-        "NH": "New Hampshire",
-        "NJ": "New Jersey",
-        "NM": "New Mexico",
-        "NY": "New York",
-        "NC": "North Carolina",
-        "ND": "North Dakota",
-        "OH": "Ohio",
-        "OK": "Oklahoma",
-        "OR": "Oregon",
-        "PA": "Pennsylvania",
-        "RI": "Rhode Island",
-        "SC": "South Carolina",
-        "SD": "South Dakota",
-        "TN": "Tennessee",
-        "TX": "Texas",
-        "UT": "Utah",
-        "VT": "Vermont",
-        "VA": "Virginia",
-        "WA": "Washington",
-        "WV": "West Virginia",
-        "WI": "Wisconsin",
-        "WY": "Wyoming"
-    }
-    return states_dictionary[state_abbrev]
+    return render(request, 'park/detail.html', {
+        'lat': lat,
+        'long': long,
+        'full_name': full_name,
+        'access_token': access_token,
+    })
