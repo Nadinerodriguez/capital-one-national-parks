@@ -66,6 +66,9 @@ def detail(request):
     articles_dictionary = api_functions.find_articles(park_selected)
     news_dictionary = api_functions.find_news(park_selected)
     events_dictionary = api_functions.find_events(park_selected)
+    visitor_centers_dictionary = api_functions.find_visitor_centers(park_selected)
+    campgrounds_dictionary = api_functions.find_campgrounds(park_selected)
+    places_dictionary = api_functions.find_places(park_selected)
 
     return render(request, 'park/detail.html', {
         'lat': lat,
@@ -79,5 +82,11 @@ def detail(request):
         'news_total': news_dictionary['news_total'],
         'news_releases': news_dictionary['news_releases'],
         'events_total': events_dictionary['events_total'],
-        'events': events_dictionary['events']
+        'events': events_dictionary['events'],
+        'visitor_centers_total': visitor_centers_dictionary['visitor_centers_total'],
+        'visitor_centers': visitor_centers_dictionary['visitor_centers'],
+        'campgrounds_total': campgrounds_dictionary['campgrounds_total'],
+        'campgrounds': campgrounds_dictionary['campgrounds'],
+        'places_total': places_dictionary['places_total'],
+        'places': places_dictionary['places']
     })

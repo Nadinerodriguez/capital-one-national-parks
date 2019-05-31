@@ -31,7 +31,7 @@
     <div class="card rounded border shadow-sm">
       <div id="map-view-card">
         <h2 class="mb-0">
-          <a class="btn btn-secondary btn-block" data-toggle="collapse" href="#collapseOne" role="button" aria-expanded="true" aria-controls="collapseOne">
+          <a id="map-view-button" class="btn btn-secondary btn-block" data-toggle="collapse" href="#collapseOne" role="button" aria-expanded="true" aria-controls="collapseOne">
             <label style="font-size: 24px; font-weight: bold;">Hide/Show Map View</label>
           </a>
         </h2>
@@ -81,6 +81,8 @@
   } else {
     var noMap = document.getElementById('no-map');
     noMap.hidden = false;
+    $('#map-view-button').attr('aria-expanded', 'false');
+    $('#collapseOne').removeClass('show');
   }
 </script>
 
@@ -104,8 +106,12 @@
       <div data-spy="scroll" data-target="#list-example" data-offset="0" class="scrollspy-example">
         <h4 id="list-item-1">Overview</h4>
         <div></div>
+
         <h4 id="list-item-2">Alerts</h4>
-        {% for alert in alerts %}
+        {% if alerts_total == "0" %}
+          <div>No current alerts for this location</div>
+        {% else %}
+          {% for alert in alerts %}
         <div>
           <div> {{ alert.category }} </div>
           <div> {{ alert.title }} </div>
@@ -113,19 +119,22 @@
           <div> {{ alert.url }} </div>
         </div>
         <br />
-        {% endfor %}
+          {% endfor %}
+        {% endif %}
+
         <h4 id="list-item-3">Articles, News, Events</h4>
+        <!-- Populate articles -->
         {% for article in articles %}
         <div>
           <div><img src="{{ article.listingimage.url }}" width="50%" class='img-fluid'/></div>
           <div> {{ article.url }} </div>
           <div> {{ article.title }} </div>
           <div> {{ article.listingdescription }} </div>
-          <div></div>
         </div>
         <br />
         {% endfor %}
 
+         <!-- Populate news -->
         {% if news_total == "0" %}
           <div>No current news for this location</div>
         {% else %}
@@ -134,9 +143,49 @@
           {% endfor %}
         {% endif %}
 
-        
+        <!-- Populate events -->
+        {% if events_total == "0" %}
+          <div>No current events for this location</div>
+        {% else %}
+          <div>We have events</div>
+        {% endif%}
+
         <h4 id="list-item-4">Places, Visitor Centers, Campgrounds</h4>
-        <p></p>
+        <!-- Populate places -->
+        {% if places_total == "0" %}
+          <div>No current places for this location</div>
+        {% else %}
+          {% for place in places_total %}
+            <div> {{ place.title }} </div>
+            <div> {{ place.listingdescription }} </div>
+            <div> {{ place.url }}</div>
+            <br />
+          {% endfor %}
+        {% endif %}
+
+        <!-- Populate visitor centers -->
+        {% if visitor_centers_total == "0" %}
+          <div>No current visitor centers for this location</div>
+        {% else %}
+          {% for visitor_center in visitor_centers %}
+            <div> {{ visitor_center.name }} </div>
+            <div> {{ visitor_center.description }} </div>
+            <div> {{ visitor_center.url }}</div>
+            <br />
+          {% endfor %}
+        {% endif %}
+
+        <!-- Populate campgrounds -->
+        {% if campgrounds_total == "0" %}
+          <div>No current campgrounds for this location</div>
+        {% else %}
+          {% for campground in campgrounds %}
+            <div> {{ campground.name }} </div>
+            <div> {{ campground.description }} </div>
+            <br />
+          {% endfor %}
+        {% endif %}
+
         <h4 id="list-item-5">Educational Information</h4>
         <p></p>
 
@@ -144,8 +193,6 @@
     </div>
   </div>
 </div>
-
-
 
 
 {% endblock %}

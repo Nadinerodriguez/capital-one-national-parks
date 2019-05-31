@@ -141,3 +141,51 @@ def find_events(park_code):
         'events_total': events_total,
         'events': events
      }
+
+def find_visitor_centers(park_code):
+    global API_KEY
+
+    url = "https://developer.nps.gov/api/v1/visitorcenters?parkCode=" + park_code + "&api_key=" + API_KEY
+
+    response = requests.get(url)
+    json_object = response.json()
+
+    visitor_centers_total = json_object['total']
+    visitor_centers = json_object['data']
+
+    return {
+        'visitor_centers_total': visitor_centers_total,
+        'visitor_centers': visitor_centers
+    }
+
+def find_campgrounds(park_code):
+    global API_KEY
+
+    url = "https://developer.nps.gov/api/v1/campgrounds?parkCode=" + park_code + "&api_key=" + API_KEY
+
+    response = requests.get(url)
+    json_object = response.json()
+
+    campgrounds_total = json_object['total']
+    campgrounds = json_object['data']
+
+    return {
+        'campgrounds_total': campgrounds_total,
+        'campgrounds': campgrounds
+    }
+
+def find_places(park_code):
+    global API_KEY
+
+    url = "https://developer.nps.gov/api/v1/places?parkCode=" + park_code + "&api_key=" + API_KEY
+
+    response = requests.get(url)
+    json_object = response.json()
+
+    places_total = json_object['total']
+    places = json_object['data']
+
+    return {
+        'places_total': places_total,
+        'places': places
+    }
