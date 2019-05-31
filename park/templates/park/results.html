@@ -78,6 +78,7 @@
         <form action="{% url 'detail' %}" method="post">
           {% csrf_token %}
           <!--  TODO: Maybe also pass in first image? -->
+          <!-- TODO: Maybe also pass in weather info? -->
           <input type='hidden' value='{{ location.parkCode }}' name='park-code'>
           <input type='hidden' value='{{ location.latLong }}' name='lat-long'>
           <input type='hidden' value='{{ location.fullName }}' name='full-name'>

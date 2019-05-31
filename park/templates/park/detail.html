@@ -1,9 +1,151 @@
 {% extends 'park/base.html' %}
+
 {% block content %}
 
+<style>
+  body {
+    position: relative;
+  }
 
-<h1>Hi</h1>
-<h1>{{location.fullName}}</h1>
+  .sticky-offset {
+    top: 30px;
+  }
+
+  #mapid {
+    height: 500px;
+  }
+
+</style>
+
+<script>
+  $(document).ready(function() {
+    // $('#main-nav-bar').hide();
+    $('body').attr('data-spy', 'scroll');
+    $('body').attr('data-target', '#list-example');
+    $('body').scrollspy({ target: '#list-example' });
+  });
+</script>
+
+<div class="container mt-3 mb-5">
+  <div class="accordion" id="map-view-accordion">
+    <div class="card rounded border shadow-sm">
+      <div id="map-view-card">
+        <h2 class="mb-0">
+          <a class="btn btn-secondary btn-block" data-toggle="collapse" href="#collapseOne" role="button" aria-expanded="true" aria-controls="collapseOne">
+            <label style="font-size: 24px; font-weight: bold;">Hide/Show Map View</label>
+          </a>
+        </h2>
+      </div>
+
+      <div id="collapseOne" class="collapse show" aria-labelledby="map-view-card" data-parent="#map-view-accordion">
+        <div class="card-body">
+          <div id="mapid">
+            <!-- This holds a map view from JS script -->
+            <label id="no-map" hidden>No current map coordinates available for this location.</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  /*
+    Note: This script needs to be placed after #mapid
+    From leafletjs
+  */
+
+  var lat = "{{ lat }}";
+  var long = "{{ long }}";
+
+  console.log(lat);
+  console.log(long);
+
+  // create map
+  if (lat != "" && long != "") {
+    console.log("Creating a map!");
+    var mymap = L.map('mapid').setView([lat, long], 13);
+
+    // render map layer
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      maxZoom: 18,
+      id: 'mapbox.streets',
+      accessToken: '{{ access_token }}'
+    }).addTo(mymap);
+
+    // add marker
+    var marker = L.marker([lat, long]).addTo(mymap);
+    marker.bindPopup("<strong>{{ full_name }}</strong>").openPopup();
+
+  } else {
+    var noMap = document.getElementById('no-map');
+    noMap.hidden = false;
+  }
+</script>
+
+<!-- Holds our scroll spy container -->
+<div class="container pt-5 mb-3 border-top border-bottom">
+  <div class="row">
+
+    <!-- Holds our categories -->
+    <div class="col-3">
+      <div id="list-example" class="list-group sticky-top sticky-offset">
+        <a class="list-group-item list-group-item-action list-group-item-success" href="#list-item-1">Overview</a>
+        <a class="list-group-item list-group-item-action list-group-item-success" href="#list-item-2">Alerts</a>
+        <a class="list-group-item list-group-item-action list-group-item-success" href="#list-item-3">Articles, News, Events</a>
+        <a class="list-group-item list-group-item-action list-group-item-success" href="#list-item-4">Places, Visitor Centers, Campgrounds</a>
+        <a class="list-group-item list-group-item-action list-group-item-success" href="#list-item-5">Educational Information</a>
+
+      </div>
+    </div>
+
+    <div class="col-9">
+      <div data-spy="scroll" data-target="#list-example" data-offset="0" class="scrollspy-example">
+        <h4 id="list-item-1">Overview</h4>
+        <div></div>
+        <h4 id="list-item-2">Alerts</h4>
+        {% for alert in alerts %}
+        <div>
+          <div> {{ alert.category }} </div>
+          <div> {{ alert.title }} </div>
+          <div> {{ alert.description }} </div>
+          <div> {{ alert.url }} </div>
+        </div>
+        <br />
+        {% endfor %}
+        <h4 id="list-item-3">Articles, News, Events</h4>
+        {% for article in articles %}
+        <div>
+          <div><img src="{{ article.listingimage.url }}" width="50%" class='img-fluid'/></div>
+          <div> {{ article.url }} </div>
+          <div> {{ article.title }} </div>
+          <div> {{ article.listingdescription }} </div>
+          <div></div>
+        </div>
+        <br />
+        {% endfor %}
+
+        {% if news_total == "0" %}
+          <div>No current news for this location</div>
+        {% else %}
+          {% for news_release in news_releases %}
+            <div>news {{forloop.counter}}</div>
+          {% endfor %}
+        {% endif %}
+
+        
+        <h4 id="list-item-4">Places, Visitor Centers, Campgrounds</h4>
+        <p></p>
+        <h4 id="list-item-5">Educational Information</h4>
+        <p></p>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 
 {% endblock %}

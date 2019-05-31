@@ -62,9 +62,22 @@ def detail(request):
     # TODO: build context
     access_token = api_keys.get_mapbox_access_token()
 
+    alerts_dictionary = api_functions.find_alerts(park_selected)
+    articles_dictionary = api_functions.find_articles(park_selected)
+    news_dictionary = api_functions.find_news(park_selected)
+    events_dictionary = api_functions.find_events(park_selected)
+
     return render(request, 'park/detail.html', {
         'lat': lat,
         'long': long,
         'full_name': full_name,
         'access_token': access_token,
+        'alerts_total': alerts_dictionary['alerts_total'],
+        'alerts': alerts_dictionary['alerts'],
+        'articles_total': articles_dictionary['articles_total'],
+        'articles': articles_dictionary['articles'],
+        'news_total': news_dictionary['news_total'],
+        'news_releases': news_dictionary['news_releases'],
+        'events_total': events_dictionary['events_total'],
+        'events': events_dictionary['events']
     })
