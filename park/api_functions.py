@@ -189,3 +189,16 @@ def find_places(park_code):
         'places_total': places_total,
         'places': places
     }
+
+def find_overview_details(park_code):
+    global API_KEY
+
+    fields = "&fields=images,entranceFees,entrancePasses,operatingHours,exceptions"
+    url = "https://developer.nps.gov/api/v1/parks?parkCode=" + park_code + "&api_key=" + API_KEY + fields
+
+    response = requests.get(url)
+    json_object = response.json()
+
+    overview = json_object['data']
+
+    return {'overview': overview}

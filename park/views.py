@@ -62,6 +62,7 @@ def detail(request):
     # TODO: build context
     access_token = api_keys.get_mapbox_access_token()
 
+    overview_dictionary = api_functions.find_overview_details(park_selected)
     alerts_dictionary = api_functions.find_alerts(park_selected)
     articles_dictionary = api_functions.find_articles(park_selected)
     news_dictionary = api_functions.find_news(park_selected)
@@ -75,6 +76,7 @@ def detail(request):
         'long': long,
         'full_name': full_name,
         'access_token': access_token,
+        'overview': overview_dictionary['overview'],
         'alerts_total': alerts_dictionary['alerts_total'],
         'alerts': alerts_dictionary['alerts'],
         'articles_total': articles_dictionary['articles_total'],
