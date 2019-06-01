@@ -23,7 +23,7 @@
 
 <div class="container park-card mb-3 bg-light rounded border">
   <div class="row">
-    <div class="col-md-4 col-xs-12">
+    <div class="col-md-4 col-xs-12 text">
 
       {% if not location.images.0.url %} <!-- If we have 0 images -->
         <img src="http://www.sclance.com/pngs/image-placeholder-png/image_placeholder_png_698412.png" class="img-fluid" width="100%" />
@@ -75,14 +75,14 @@
       </div> -->
 
       <div style="font-size: 24px;">
-        <form action="{% url 'detail' %}" method="post">
+        <form action="{% url 'detail' %}"  method="post">
           {% csrf_token %}
           <!--  TODO: Maybe also pass in first image? -->
           <!-- TODO: Maybe also pass in weather info? -->
           <input type='hidden' value='{{ location.parkCode }}' name='park-code'>
           <input type='hidden' value='{{ location.latLong }}' name='lat-long'>
           <input type='hidden' value='{{ location.fullName }}' name='full-name'>
-          <input type="submit" class="btn btn-outline-secondary btn-block" value="{{ location.fullName }}">
+          <input type="submit" class="btn btn-success btn-block" value="{{ location.fullName }}">
         </form>
       </div>
 

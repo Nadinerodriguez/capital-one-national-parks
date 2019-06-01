@@ -51,8 +51,8 @@
 
 <script>
   /*
-    Note: This script needs to be placed after #mapid
-    From leafletjs
+  Note: This script needs to be placed after #mapid
+  From leafletjs
   */
 
   var lat = "{{ lat }}";
@@ -86,6 +86,7 @@
   }
 </script>
 
+<h2 class="text-center"> {{ overview.0.fullName }} </h2>
 <!-- Holds our scroll spy container -->
 <div class="container pt-5 mb-3 border-top border-bottom">
   <div class="row">
@@ -104,101 +105,182 @@
 
     <div class="col-9">
       <div data-spy="scroll" data-target="#list-example" data-offset="0" class="scrollspy-example">
-        <h4 id="list-item-1">Overview</h4>
-        <div>TEST</div>
-        <div> {{ overview.0.description }} </div>
-        <div> {{ overview.0.directionsInfo }} </div>
-        <div> {{ overview.0.entranceFees }} </div>
-        <div> {{ overview.0.entrancePasses }} </div>
-        <div> {{ overview.0.fullName }} </div>
-        <div> {{ overview.0.operatingHours }} </div>
-        <div> {{ overview.0.exceptions }} </div>
+        <h4 id="list-item-1" class="border-bottom">Overview</h4>
+        <div>Description: {{ overview.0.description }} </div>
+        <br/>
+        <div>DirectionsInfo {{ overview.0.directionsInfo }} </div>
+        <br/>
+        <div>Entrance Fees {{ overview.0.entranceFees }} </div>
+        <br/>
+        <div>Entrance Passes {{ overview.0.entrancePasses }} </div>
+        <br/>
+        <div>Operating Hours{{ overview.0.operatingHours }} </div>
+        <br/>
+        <div>Exceptions {{ overview.0.exceptions }} </div>
+        <br/>
 
-        <h4 id="list-item-2">Alerts</h4>
+        <h4 id="list-item-2" class="border-bottom">Alerts</h4>
         {% if alerts_total == "0" %}
-          <div>No current alerts for this location</div>
+        <div>No current alerts for this location</div>
         {% else %}
-          {% for alert in alerts %}
+        {% for alert in alerts %}
         <div>
           <div> {{ alert.category }} </div>
           <div> {{ alert.title }} </div>
           <div> {{ alert.description }} </div>
           <div> {{ alert.url }} </div>
         </div>
-        <br />
-          {% endfor %}
-        {% endif %}
-
-        <h4 id="list-item-3">Articles, News, Events</h4>
-        <!-- Populate articles -->
-        {% for article in articles %}
-        <div>
-          <div><img src="{{ article.listingimage.url }}" width="50%" class='img-fluid'/></div>
-          <div> {{ article.url }} </div>
-          <div> {{ article.title }} </div>
-          <div> {{ article.listingdescription }} </div>
-        </div>
-        <br />
         {% endfor %}
-
-         <!-- Populate news -->
-        {% if news_total == "0" %}
-          <div>No current news for this location</div>
-        {% else %}
-          {% for news_release in news_releases %}
-            <div>news {{forloop.counter}}</div>
-          {% endfor %}
         {% endif %}
+        <br/>
 
-        <!-- Populate events -->
-        {% if events_total == "0" %}
-          <div>No current events for this location</div>
+        <h4 id="list-item-3" class="border-bottom">Articles, News, Events</h4>
+        <!-- Populate articles -->
+        {% if articles_total == "0" %}
+        <div>No current articles for this location</div>
         {% else %}
-          <div>We have events</div>
-        {% endif%}
+        <div class="container">
+          <div class="row">
+            {% for article in articles %}
 
-        <h4 id="list-item-4">Places, Visitor Centers, Campgrounds</h4>
-        <!-- Populate places -->
-        {% if places_total == "0" %}
-          <div>No current places for this location</div>
-        {% else %}
-          {% for place in places_total %}
-            <div> {{ place.title }} </div>
-            <div> {{ place.listingdescription }} </div>
-            <div> {{ place.url }}</div>
-            <br />
-          {% endfor %}
+
+            {% if forloop.counter0|divisibleby:"2" == True %}
+            <div class="col-12 pb-4">
+              <div class="card-deck" id="card-deck__{{forloop.counter0}}">
+                {% endif %}
+
+                <div class="card">
+
+                  {% if article.listingimage.url == "" %}
+                  <img class="card-img-top center-cropped bg-dark" src=http://www.sclance.com/pngs/image-placeholder-png/image_placeholder_png_698412.png />
+                  {% else %}
+                  <img class="card-img-top center-cropped bg-dark" src="{{ article.listingimage.url }}" alt="article image" />
+                  {% endif %}
+
+                  <div class="card-body">
+                    <h5 class="card-title">{{ article.title }}</h5>
+                    <p class="card-text">{{ article.listingdescription }}</p>
+                  </div>
+                  <div class="card-footer">
+                    <a href="{{ article.url }}" class="btn btn-primary">Article link</a>
+                  </div>
+                </div>
+
+                {% if forloop.counter0|divisibleby:"2" == False %}
+              </div>
+            </div>
+            {% endif %}
+
+            <!-- Edge case: Ensure we have enough closing divs and that the last article only takes up col-6 space -->
+            {% if forloop.last and forloop.counter0|divisibleby:"2" == True %}
+          </div>
+        </div>
+
+        <script>
+          var lastArticleCardDeck = document.getElementById("card-deck__{{forloop.counter0}}");
+          lastArticleCardDeck.classList.remove("card-deck");
+          lastArticleCardDeck.parentElement.classList.replace("col-12", "col-6");
+        </script>
         {% endif %}
-
-        <!-- Populate visitor centers -->
-        {% if visitor_centers_total == "0" %}
-          <div>No current visitor centers for this location</div>
-        {% else %}
-          {% for visitor_center in visitor_centers %}
-            <div> {{ visitor_center.name }} </div>
-            <div> {{ visitor_center.description }} </div>
-            <div> {{ visitor_center.url }}</div>
-            <br />
-          {% endfor %}
-        {% endif %}
-
-        <!-- Populate campgrounds -->
-        {% if campgrounds_total == "0" %}
-          <div>No current campgrounds for this location</div>
-        {% else %}
-          {% for campground in campgrounds %}
-            <div> {{ campground.name }} </div>
-            <div> {{ campground.description }} </div>
-            <br />
-          {% endfor %}
-        {% endif %}
-
-        <h4 id="list-item-5">Educational Information</h4>
-        <p></p>
-
+        {% endfor %}
       </div>
     </div>
+    {% endif %}
+    <br/>
+
+    <!-- Populate news -->
+    {% if news_total == "0" %}
+    <div>No current news for this location</div>
+    {% else %}
+    {% for news_release in news_releases %}
+    <div><strong>News release: </strong> {{ news_release.title }} </div>
+    <div> {{ news_release.abstract }} </div>
+    <div> {{ news_release.releasedate }} </div>
+    <div> {{ news_release.url }} </div>
+    <br />
+    {% endfor %}
+    {% endif %}
+    <br/>
+
+    <!-- Populate events -->
+    {% if events_total == "0" %}
+    <div>No current events for this location</div>
+    {% else %}
+    {% for event in events %}
+    <div><strong>Event: </strong>{{ event.title }}</div>
+    <div id="event-description__{{forloop.counter0}}">
+      <!-- Api endpoint for events returns some html in a string
+      We need to parse this string into HTML code using the safe filter -->
+      {{ event.description|safe }}
+    </div>
+    <div>
+      {% if not event.images.0.url %} <!-- If we have 0 images -->
+      <img src="http://www.sclance.com/pngs/image-placeholder-png/image_placeholder_png_698412.png" class="img-fluid center-cropped" />
+      {% else %}
+      <img src="https://www.nps.gov{{ event.images.0.url }}" class="img-fluid center-cropped"/>
+      {% endif %}
+    </div>
+    <div>
+      {% for type in event.types %}
+      <label>{{ type }} &nbsp;&nbsp;&nbsp;</label>
+      {% endfor %}
+    </div>
+    {% endfor %}
+    {% endif%}
+    <br/>
+
+    <h4 id="list-item-4" class="border-bottom">Places, Visitor Centers, Campgrounds</h4>
+    <!-- Populate places -->
+    {% if places_total == "0" %}
+    <div>No current places for this location</div>
+    {% else %}
+    {% for place in places_total %}
+    <div> {{ place.title }} </div>
+    <div> {{ place.listingdescription }} </div>
+    <div> {{ place.url }}</div>
+    {% endfor %}
+    {% endif %}
+    <br/>
+
+    <!-- Populate visitor centers -->
+    {% if visitor_centers_total == "0" %}
+    <div>No current visitor centers for this location</div>
+    {% else %}
+    {% for visitor_center in visitor_centers %}
+    <div> {{ visitor_center.name }} </div>
+    <div> {{ visitor_center.description }} </div>
+    <div> {{ visitor_center.url }}</div>
+    {% endfor %}
+    {% endif %}
+    <br/>
+
+    <!-- Populate campgrounds -->
+    {% if campgrounds_total == "0" %}
+    <div>No current campgrounds for this location</div>
+    {% else %}
+    {% for campground in campgrounds %}
+    <div> {{ campground.name }} </div>
+    <div> {{ campground.description }} </div>
+    {% endfor %}
+    {% endif %}
+    <br/>
+
+    <h4 id="list-item-5" class="border-bottom">Educational Information</h4>
+    <!-- Populate Educational Information -->
+    {% if lesson_plans_total == "0" %}
+    <div>No current lesson plans for this location</div>
+    {% else %}
+    {% for lesson_plan in lesson_plans %}
+    <div> {{ lesson_plan.gradeLevel }} </div>
+    <div> {{ lesson_plan.questionobjective }} </div>
+    <div> {{ lesson_plan.subject }} </div>
+    <div> {{ lesson_plan.title }} </div>
+    {% endfor %}
+    {% endif %}
+    <br/>
   </div>
+</div>
+</div>
 </div>
 
 

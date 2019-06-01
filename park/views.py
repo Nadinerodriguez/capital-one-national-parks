@@ -70,6 +70,7 @@ def detail(request):
     visitor_centers_dictionary = api_functions.find_visitor_centers(park_selected)
     campgrounds_dictionary = api_functions.find_campgrounds(park_selected)
     places_dictionary = api_functions.find_places(park_selected)
+    lesson_plans_dictionary = api_functions.find_lesson_plans(park_selected)
 
     return render(request, 'park/detail.html', {
         'lat': lat,
@@ -90,5 +91,7 @@ def detail(request):
         'campgrounds_total': campgrounds_dictionary['campgrounds_total'],
         'campgrounds': campgrounds_dictionary['campgrounds'],
         'places_total': places_dictionary['places_total'],
-        'places': places_dictionary['places']
+        'places': places_dictionary['places'],
+        'lesson_plans_total': lesson_plans_dictionary['lesson_plans_total'],
+        'lesson_plans': lesson_plans_dictionary['lesson_plans']
     })
