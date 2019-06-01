@@ -25,14 +25,14 @@
 
 <script>
   $(document).ready(function() {
-    // $('#main-nav-bar').hide();
+    // Set up scrollspy
     $('body').attr('data-spy', 'scroll');
     $('body').attr('data-target', '#list-example');
     $('body').scrollspy({ target: '#list-example' });
   });
 </script>
 
-<div class="container-fluid mt-3 mb-5">
+<div class="container mt-3 mb-5">
   <div class="accordion" id="map-view-accordion">
     <div class="card rounded border shadow-sm">
       <div id="map-view-card">
@@ -100,13 +100,15 @@
         <a class="list-group-item list-group-item-action list-group-item-success" href="#list-item-3">Articles, News, Events</a>
         <a class="list-group-item list-group-item-action list-group-item-success" href="#list-item-4">Places, Visitor Centers, Campgrounds</a>
         <a class="list-group-item list-group-item-action list-group-item-success" href="#list-item-5">Educational Information</a>
+        <br /><br />
+        <a href="#main-nav-bar" class="btn btn-outline-success">Back to Top</a>
       </div>
     </div>
 
     <!-- Holds our section data -->
     <div class="col-9">
       <div data-spy="scroll" data-target="#list-example" data-offset="0" class="scrollspy-example">
-        <h4 class="border-bottom" id="list-item-1">Overview</h4>
+        <h3 class="border-bottom text-center" id="list-item-1">Overview</h3>
 
         <div><strong>Description: </strong></div>
         <div> {{ overview.0.description }} </div>
@@ -120,9 +122,9 @@
         <div class="container">
           <div class="row">
             {% for entrance_fee in overview.0.entranceFees%}
-            <div class="col-4">
+            <div class="col-4 mb-5">
               <div>{{ entrance_fee.title }}</div>
-              <div>Cost: ${{ entrance_fee.cost|slice:4 }}</div>
+              <div class="text-muted font-weight-bold">Cost: ${{ entrance_fee.cost|slice:4 }}</div>
             </div>
             <br />
             {% endfor %}
@@ -179,7 +181,7 @@
         </table>
         {% endfor %}
 
-        <h4 class="border-bottom" id="list-item-2">Alerts</h4>
+        <h3 class="border-bottom text-center" id="list-item-2">Alerts</h3>
         <!-- Populate alerts -->
         {% if alerts_total == "0" %}
         <div>No current alerts for this location</div>
@@ -197,14 +199,14 @@
         {% endfor %}
         {% endif %}
 
-        <h4 class="border-bottom" id="list-item-3">Articles, News, Events</h4>
+        <h3 class="border-bottom text-center" id="list-item-3">Articles, News, Events</h3>
         <!-- Populate articles -->
         {% if articles_total == "0" %}
         <div>No current articles for this location</div>
         <br />
         {% else %}
         <!-- If we have articles -->
-        <div class="container">
+        <div class="container mt-4">
           <div class="row">
             {% for article in articles %}
 
@@ -214,20 +216,24 @@
               <div class="card-deck" id="card-deck__{{forloop.counter0}}">
                 {% endif %}
 
-                <div class="card">
+                <div class="card rounded-0">
 
                   {% if article.listingimage.url == "" %}
-                  <img class="card-img-top center-cropped bg-dark" src=http://www.sclance.com/pngs/image-placeholder-png/image_placeholder_png_698412.png />
+                  <img class="card-img-top center-cropped bg-dark rounded-0" src=http://www.sclance.com/pngs/image-placeholder-png/image_placeholder_png_698412.png />
                   {% else %}
-                  <img class="card-img-top center-cropped bg-dark" src="{{ article.listingimage.url }}" alt="article image" />
+                  <img class="card-img-top center-cropped bg-dark rounded-0" src="{{ article.listingimage.url }}" alt="article image" />
                   {% endif %}
 
                   <div class="card-body">
-                    <h5 class="card-title">{{ article.title }}</h5>
+                    <h5 class="card-title">
+                      <a href="{{ article.url }}" class="btn-link text-body font-weight-bold">{{ article.title }}</a>
+                    </h5>
                     <p class="card-text">{{ article.listingdescription }}</p>
+
                   </div>
                   <div class="card-footer">
-                    <a href="{{ article.url }}" class="btn btn-primary">Article link</a>
+                    <!-- <a href="{{ article.url }}" class="btn btn-primary">Article link</a> -->
+                    <span class="badge badge-success float-right">Article</span>
                   </div>
                 </div>
 
@@ -262,7 +268,7 @@
     <div class="card bg-light">
       <div class="card-body">
         <h5 class="card-title">
-          <span class="badge badge-secondary">News Release</span>
+          <span class="badge badge-success">News Release</span>
           {{ news_release.title }}
         </h5>
         <h6 id="news-pub-date__{{forloop.counter0}}" class="card-subtitle mb-2 text-muted">
@@ -289,9 +295,9 @@
     <br />
     {% else %}
     {% for event in events %}
-    <div class="card">
+    <div class="card rounded-0">
       <div class="card-header">
-        <strong>Event: </strong>{{ event.title }}
+        <h5><span class="badge badge-success">Event</span>&nbsp;{{ event.title }}</h5>
       </div>
 
       <div class="container">
@@ -320,7 +326,7 @@
 
       <div class="card-footer text-muted">
         {% for type in event.types %}
-        <span class="badge badge-success">{{ type }}</span>
+        <span class="badge badge-secondary">{{ type }}</span>
         {% endfor %}
       </div>
     </div>
@@ -331,7 +337,7 @@
 
 
 
-    <h4 class="border-bottom" id="list-item-4">Places, Visitor Centers, Campgrounds</h4>
+    <h3 class="border-bottom text-center" id="list-item-4">Places, Visitor Centers, Campgrounds</h3>
     <!-- Populate places -->
     {% if places_total == "0" %}
     <div>No current places for this location</div>
@@ -350,7 +356,7 @@
           <h5>{{ place.title }}</h5>
           <div> {{ place.listingdescription }}</div>
           <a href="{{ place.url }}" class="card-link">Learn more</a>
-          <span class="badge badge-secondary float-right">Place</span>
+          <span class="badge badge-success float-right">Place</span>
         </div>
       </div>
     </div>
@@ -370,7 +376,7 @@
         <div class="col-12">
           <h5> {{ visitor_center.name }} </h5>
           <div> {{ visitor_center.description }}</div>
-          <span class="badge badge-secondary float-right">Visitor center</span>
+          <span class="badge badge-success float-right">Visitor center</span>
         </div>
       </div>
     </div>
@@ -384,14 +390,12 @@
     <br />
     {% else%}
     {% for campground in campgrounds %}
-
-
     <div class="container bg-light rounded border place-card">
       <div class="row">
         <div class="col-12">
           <h5> {{ campground.name }} </h5>
           <div> {{ campground.description }}</div>
-          <span class="badge badge-secondary float-right">Campground</span>
+          <span class="badge badge-success float-right">Campground</span>
         </div>
       </div>
     </div>
@@ -399,26 +403,23 @@
     {% endfor %}
     {% endif %}
 
-    <h4 id="list-item-5" class="border-bottom">Educational Information</h4>
+    <h3 id="list-item-5" class="border-bottom text-center">Educational Information</h3>
     <!-- Populate Educational Information -->
     {% if lesson_plans_total == "0" %}
     <div>No current lesson plans for this location</div>
     {% else %}
     {% for lesson_plan in lesson_plans %}
-    <div class="container bg-light rounded border place-card">
-      <div class="row">
-        <div class="col-12">
-          <h4> {{ lesson_plan.title }} </h4>
-          <h6 class="text-dark text-uppercase font-italic"> {{ lesson_plan.subject }} </h6>
-          <div class="text-dark text-uppercase font-italic">
-            <h6> {{ lesson_plan.gradeLevel }} </h6>
-          </div>
-          <div> {{ lesson_plan.questionobjective }} </div>
-          <span class="badge badge-info float-left">Lesson Plans</span>
-        </div>
+    <div class="card bg-light">
+      <div class="card-body">
+        <h5 class="card-title">{{ lesson_plan.title }}</h5>
+        <div class="text-dark font-italic"> {{ lesson_plan.subject }} </div>
+        <div>{{ lesson_plan.gradeLevel }} </div>
+        <div> {{ lesson_plan.questionObjective }} </div>
+        <a href="{{ lesson_plan.url }}" class="card-link">Learn more</a>
+        <span class="badge badge-success float-right">Lesson Plans</span>
       </div>
     </div>
-    <br>
+    <br/>
     {% endfor %}
     {% endif %}
 
@@ -427,16 +428,15 @@
     <div>No current facts on people for this location</div>
     {% else %}
     {% for someone in people %}
-    <div class="container bg-light rounded border place-card">
-      <div class="row">
-        <div class="col-12">
-          <h5> {{ someone.title }} </h5>
-          <div> {{ someone.listingdescription }}</div>
-          <span class="badge badge-info float-left">People</span>
-        </div>
+    <div class="card bg-light">
+      <div class="card-body">
+        <h5 class="card-title">{{ someone.title }}</h5>
+        <div> {{ someone.listingdescription }} </div>
+        <a href="{{ someone.url }}" class="card-link">Learn more</a>
+        <span class="badge badge-success float-right">People</span>
       </div>
     </div>
-    <br />
+    <br/>
     {% endfor %}
     {% endif %}
 
