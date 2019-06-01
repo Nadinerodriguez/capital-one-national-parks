@@ -206,6 +206,23 @@ def find_lesson_plans(park_code):
         'lesson_plans': lesson_plans
     }
 
+def find_people(park_code):
+    global API_KEY
+
+    url = "https://developer.nps.gov/api/v1/people?parkCode=" + park_code + "&api_key=" + API_KEY
+
+    response = requests.get(url)
+    json_object = response.json()
+
+    people_total = json_object['total']
+    people = json_object['data']
+
+    return {
+        'people_total': people_total,
+        'people': people
+    }
+
+
 def find_overview_details(park_code):
     global API_KEY
 

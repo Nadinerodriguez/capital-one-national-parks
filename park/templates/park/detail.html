@@ -6,15 +6,18 @@
   body {
     position: relative;
   }
-
   .sticky-offset {
     top: 30px;
   }
-
   #mapid {
     height: 500px;
   }
-
+  .center-cropped {
+    object-fit: contain;
+    object-position: center;
+    width: 100%;
+    height: 286px;
+  }
 </style>
 
 <script>
@@ -54,18 +57,14 @@
   Note: This script needs to be placed after #mapid
   From leafletjs
   */
-
   var lat = "{{ lat }}";
   var long = "{{ long }}";
-
   console.log(lat);
   console.log(long);
-
   // create map
   if (lat != "" && long != "") {
     console.log("Creating a map!");
     var mymap = L.map('mapid').setView([lat, long], 13);
-
     // render map layer
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -73,11 +72,9 @@
       id: 'mapbox.streets',
       accessToken: '{{ access_token }}'
     }).addTo(mymap);
-
     // add marker
     var marker = L.marker([lat, long]).addTo(mymap);
     marker.bindPopup("<strong>{{ full_name }}</strong>").openPopup();
-
   } else {
     var noMap = document.getElementById('no-map');
     noMap.hidden = false;
@@ -86,9 +83,10 @@
   }
 </script>
 
-<h2 class="text-center"> {{ overview.0.fullName }} </h2>
+<h1 class="text-center mb-5"> {{ overview.0.fullName }} </h1>
+
 <!-- Holds our scroll spy container -->
-<div class="container pt-5 mb-3 border-top border-bottom">
+<div class="container mb-3">
   <div class="row">
 
     <!-- Holds our categories -->
@@ -99,30 +97,39 @@
         <a class="list-group-item list-group-item-action list-group-item-success" href="#list-item-3">Articles, News, Events</a>
         <a class="list-group-item list-group-item-action list-group-item-success" href="#list-item-4">Places, Visitor Centers, Campgrounds</a>
         <a class="list-group-item list-group-item-action list-group-item-success" href="#list-item-5">Educational Information</a>
-
       </div>
     </div>
 
+    <!-- Holds our section data -->
     <div class="col-9">
       <div data-spy="scroll" data-target="#list-example" data-offset="0" class="scrollspy-example">
-        <h4 id="list-item-1" class="border-bottom">Overview</h4>
-        <div>Description: {{ overview.0.description }} </div>
-        <br/>
-        <div>DirectionsInfo {{ overview.0.directionsInfo }} </div>
-        <br/>
-        <div>Entrance Fees {{ overview.0.entranceFees }} </div>
-        <br/>
-        <div>Entrance Passes {{ overview.0.entrancePasses }} </div>
-        <br/>
-        <div>Operating Hours{{ overview.0.operatingHours }} </div>
-        <br/>
-        <div>Exceptions {{ overview.0.exceptions }} </div>
-        <br/>
+        <h4 class="border-bottom" id="list-item-1">Overview</h4>
 
-        <h4 id="list-item-2" class="border-bottom">Alerts</h4>
+        <div> {{ overview.0.description }} </div>
+        <br />
+
+        <div> {{ overview.0.directionsInfo }} </div>
+        <br />
+
+        <div> {{ overview.0.entranceFees }} </div>
+        <br />
+
+        <div> {{ overview.0.entrancePasses }} </div>
+        <br />
+
+        <div> {{ overview.0.operatingHours }} </div>
+        <br />
+
+        <div> {{ overview.0.exceptions }} </div>
+        <br />
+
+        <h4 class="border-bottom" id="list-item-2">Alerts</h4>
+        <!-- Populate alerts -->
         {% if alerts_total == "0" %}
         <div>No current alerts for this location</div>
+        <br />
         {% else %}
+        <!-- If we have alerts-->
         {% for alert in alerts %}
         <div>
           <div> {{ alert.category }} </div>
@@ -130,20 +137,22 @@
           <div> {{ alert.description }} </div>
           <div> {{ alert.url }} </div>
         </div>
+        <br />
         {% endfor %}
         {% endif %}
-        <br/>
 
-        <h4 id="list-item-3" class="border-bottom">Articles, News, Events</h4>
+        <h4 class="border-bottom" id="list-item-3">Articles, News, Events</h4>
         <!-- Populate articles -->
         {% if articles_total == "0" %}
         <div>No current articles for this location</div>
+        <br />
         {% else %}
+        <!-- If we have articles -->
         <div class="container">
           <div class="row">
             {% for article in articles %}
 
-
+            <!-- Create card decks for every 2 iterations -->
             {% if forloop.counter0|divisibleby:"2" == True %}
             <div class="col-12 pb-4">
               <div class="card-deck" id="card-deck__{{forloop.counter0}}">
@@ -186,84 +195,146 @@
       </div>
     </div>
     {% endif %}
-    <br/>
 
     <!-- Populate news -->
     {% if news_total == "0" %}
     <div>No current news for this location</div>
+    <br />
     {% else %}
     {% for news_release in news_releases %}
-    <div><strong>News release: </strong> {{ news_release.title }} </div>
-    <div> {{ news_release.abstract }} </div>
-    <div> {{ news_release.releasedate }} </div>
-    <div> {{ news_release.url }} </div>
-    <br />
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">
+          <span class="badge badge-secondary">News Release</span>
+          {{ news_release.title }}
+        </h5>
+        <h6 id="news-pub-date__{{forloop.counter0}}" class="card-subtitle mb-2 text-muted">
+          <script>
+            // script to format date published
+            var datePub = "{{ news_release.releasedate }}";
+            var date = new Date(datePub);
+            var formattedDate = date.toString().substring(4,15);
+            // console.log(formattedDate);
+            document.getElementById("news-pub-date__{{forloop.counter0}}").innerHTML = "Date published: " + formattedDate;
+          </script>
+        </h6>
+        <p class="card-text">{{ news_release.abstract }}</p>
+        <a href="{{ news_release.url }}" class="card-link">Learn more</a>
+      </div>
+    </div>
+    <br/>
     {% endfor %}
     {% endif %}
-    <br/>
 
     <!-- Populate events -->
     {% if events_total == "0" %}
     <div>No current events for this location</div>
+    <br />
     {% else %}
     {% for event in events %}
-    <div><strong>Event: </strong>{{ event.title }}</div>
-    <div id="event-description__{{forloop.counter0}}">
-      <!-- Api endpoint for events returns some html in a string
-      We need to parse this string into HTML code using the safe filter -->
-      {{ event.description|safe }}
+    <div class="card">
+      <div class="card-header">
+        <strong>Event: </strong>{{ event.title }}
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-8">
+            <!-- Event Description Column -->
+            <div class="card-body" style="font-size: 15px;">
+              <p class="card-text">
+                <!-- Api endpoint for events returns some html in a string
+                We need to parse this string into HTML code using the safe filter -->
+                {{ event.description|safe }}
+              </p>
+            </div>
+          </div>
+
+          <div class="col-4 pl-0 pr-0 bg-dark">
+            <!-- Image Column -->
+            {% if not event.images.0.url %} <!-- If we have 0 images -->
+            <img src="http://www.sclance.com/pngs/image-placeholder-png/image_placeholder_png_698412.png" class="img-fluid pt-5 pb-5" width="100%"/>
+            {% else %}
+            <img src="https://www.nps.gov{{ event.images.0.url }}" class="img-fluid pt-5 pb-5" width="100%"/>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="card-footer text-muted">
+        {% for type in event.types %}
+        <span class="badge badge-secondary">{{ type }}</span>
+        {% endfor %}
+      </div>
     </div>
-    <div>
-      {% if not event.images.0.url %} <!-- If we have 0 images -->
-      <img src="http://www.sclance.com/pngs/image-placeholder-png/image_placeholder_png_698412.png" class="img-fluid center-cropped" />
-      {% else %}
-      <img src="https://www.nps.gov{{ event.images.0.url }}" class="img-fluid center-cropped"/>
-      {% endif %}
-    </div>
-    <div>
-      {% for type in event.types %}
-      <label>{{ type }} &nbsp;&nbsp;&nbsp;</label>
-      {% endfor %}
-    </div>
+    <br />
     {% endfor %}
     {% endif%}
-    <br/>
 
     <h4 id="list-item-4" class="border-bottom">Places, Visitor Centers, Campgrounds</h4>
     <!-- Populate places -->
     {% if places_total == "0" %}
     <div>No current places for this location</div>
+    <br />
     {% else %}
-    {% for place in places_total %}
-    <div> {{ place.title }} </div>
-    <div> {{ place.listingdescription }} </div>
-    <div> {{ place.url }}</div>
+    {% for place in places %}
+    <div class="container bg-light rounded border place-card">
+      <div class="row">
+        <!-- Column to hold place image -->
+        <div class="col-4">
+          <img src="{{ place.listingimage.url }}" width="100%" class="img-fluid"/>
+        </div>
+
+        <!-- Column to hold place description -->
+        <div class="col-8">
+          <h5>{{ place.title }}</h5>
+          <div> {{ place.listingdescription }}</div>
+          <a href="{{ place.url }}" class="card-link">Learn more</a>
+          <span class="badge badge-secondary float-right">Place</span>
+        </div>
+      </div>
+    </div>
+    <br />
     {% endfor %}
     {% endif %}
-    <br/>
 
     <!-- Populate visitor centers -->
     {% if visitor_centers_total == "0" %}
     <div>No current visitor centers for this location</div>
+    <br />
     {% else %}
     {% for visitor_center in visitor_centers %}
-    <div> {{ visitor_center.name }} </div>
-    <div> {{ visitor_center.description }} </div>
-    <div> {{ visitor_center.url }}</div>
+    <div class="container bg-light rounded border place-card">
+      <div class="row">
+        <div class="col-12">
+          <h5> {{ visitor_center.name }} </h5>
+          <div> {{ visitor_center.description }}</div>
+          <span class="badge badge-secondary float-right">Visitor center</span>
+        </div>
+      </div>
+    </div>
+    <br />
     {% endfor %}
     {% endif %}
-    <br/>
 
     <!-- Populate campgrounds -->
     {% if campgrounds_total == "0" %}
     <div>No current campgrounds for this location</div>
-    {% else %}
+    <br />
+    {% else%}
     {% for campground in campgrounds %}
-    <div> {{ campground.name }} </div>
-    <div> {{ campground.description }} </div>
+    <div class="container bg-light rounded border place-card">
+      <div class="row">
+        <div class="col-12">
+          <h5> {{ campground.name }} </h5>
+          <div> {{ campground.description }}</div>
+          <span class="badge badge-secondary float-right">Campground</span>
+        </div>
+      </div>
+    </div>
+    <br />
     {% endfor %}
     {% endif %}
-    <br/>
 
     <h4 id="list-item-5" class="border-bottom">Educational Information</h4>
     <!-- Populate Educational Information -->
@@ -277,7 +348,21 @@
     <div> {{ lesson_plan.title }} </div>
     {% endfor %}
     {% endif %}
-    <br/>
+
+    <!-- Populate People -->
+    {% if people_total == "0" %}
+    <div>No current facts on people for this location</div>
+    {% else %}
+    {% for someone in people %}
+    <div> {{ someone.title }} </div>
+    {% if not someone.images.0.url %} <!-- If we have 0 images -->
+    <img src="http://www.sclance.com/pngs/image-placeholder-png/image_placeholder_png_698412.png" class="img-fluid pt-5 pb-5" width="100%"/>
+    {% else %}
+    <img src="https://www.nps.gov{{ someone.listingimage.url}}}" class="img-fluid pt-5 pb-5" width="100%"/>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
   </div>
 </div>
 </div>
