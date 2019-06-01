@@ -29,7 +29,7 @@
   });
 </script>
 
-<div class="container mt-3 mb-5">
+<div class="container-fluid mt-3 mb-5">
   <div class="accordion" id="map-view-accordion">
     <div class="card rounded border shadow-sm">
       <div id="map-view-card">
@@ -105,23 +105,76 @@
       <div data-spy="scroll" data-target="#list-example" data-offset="0" class="scrollspy-example">
         <h4 class="border-bottom" id="list-item-1">Overview</h4>
 
+        <div><strong>Description: </strong></div>
         <div> {{ overview.0.description }} </div>
         <br />
 
-        <div> {{ overview.0.directionsInfo }} </div>
+        <div><strong>Directions: </strong></div>
+        <div>{{ overview.0.directionsInfo }}</div>
         <br />
 
-        <div> {{ overview.0.entranceFees }} </div>
+        <div><strong>Fees:</strong></div>
+        <div class="container">
+          <div class="row">
+            {% for entrance_fee in overview.0.entranceFees%}
+            <div class="col-4">
+              <div>{{ entrance_fee.title }}</div>
+              <div>Cost: ${{ entrance_fee.cost|slice:4 }}</div>
+            </div>
+            <br />
+            {% endfor %}
+          </div>
+        </div>
         <br />
 
-        <div> {{ overview.0.entrancePasses }} </div>
-        <br />
+        <div><strong>Operating hours: </strong></div>
+        {% for operating_hours in overview.0.operatingHours %}
+        <div>{{ operating_hours.description }}</div>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Day</th>
+              <th scope="col">Hours</th>
+            </tr>
+            <tbody>
+              <tr>
+                <td>Sunday</td>
+                <td>{{ operating_hours.standardHours.sunday}}</td>
+              </tr>
 
-        <div> {{ overview.0.operatingHours }} </div>
-        <br />
+              <tr>
+                <td>Monday</td>
+                <td>{{ operating_hours.standardHours.monday}}</td>
+              </tr>
 
-        <div> {{ overview.0.exceptions }} </div>
-        <br />
+              <tr>
+                <td>Tuesday</td>
+                <td>{{ operating_hours.standardHours.tuesday}}</td>
+              </tr>
+
+              <tr>
+                <td>Wednesday</td>
+                <td>{{ operating_hours.standardHours.wednesday}}</td>
+              </tr>
+
+              <tr>
+                <td>Thursday</td>
+                <td>{{ operating_hours.standardHours.thursday}}</td>
+              </tr>
+
+              <tr>
+                <td>Friday</td>
+                <td>{{ operating_hours.standardHours.friday}}</td>
+              </tr>
+
+              <tr>
+                <td>Saturday</td>
+                <td>{{ operating_hours.standardHours.saturday}}</td>
+              </tr>
+            </tbody>
+          </thead>
+        </table>
+        {% endfor %}
 
         <h4 class="border-bottom" id="list-item-2">Alerts</h4>
         <!-- Populate alerts -->
@@ -263,7 +316,7 @@
 
       <div class="card-footer text-muted">
         {% for type in event.types %}
-        <span class="badge badge-secondary">{{ type }}</span>
+        <span class="badge badge-success">{{ type }}</span>
         {% endfor %}
       </div>
     </div>
@@ -342,10 +395,20 @@
     <div>No current lesson plans for this location</div>
     {% else %}
     {% for lesson_plan in lesson_plans %}
-    <div> {{ lesson_plan.gradeLevel }} </div>
-    <div> {{ lesson_plan.questionobjective }} </div>
-    <div> {{ lesson_plan.subject }} </div>
-    <div> {{ lesson_plan.title }} </div>
+    <div class="container bg-light rounded border place-card">
+      <div class="row">
+        <div class="col-12">
+          <h4> {{ lesson_plan.title }} </h4>
+          <h6 class="text-dark text-uppercase font-italic"> {{ lesson_plan.subject }} </h6>
+          <div class="text-dark text-uppercase font-italic">
+            <h6> {{ lesson_plan.gradeLevel }} </h6>
+          </div>
+          <div> {{ lesson_plan.questionobjective }} </div>
+          <span class="badge badge-info float-left">Lesson Plans</span>
+        </div>
+      </div>
+    </div>
+    <br>
     {% endfor %}
     {% endif %}
 
@@ -354,14 +417,19 @@
     <div>No current facts on people for this location</div>
     {% else %}
     {% for someone in people %}
-    <div> {{ someone.title }} </div>
-    {% if not someone.images.0.url %} <!-- If we have 0 images -->
-    <img src="http://www.sclance.com/pngs/image-placeholder-png/image_placeholder_png_698412.png" class="img-fluid pt-5 pb-5" width="100%"/>
-    {% else %}
-    <img src="https://www.nps.gov{{ someone.listingimage.url}}}" class="img-fluid pt-5 pb-5" width="100%"/>
-    {% endif %}
+    <div class="container bg-light rounded border place-card">
+      <div class="row">
+        <div class="col-12">
+          <h5> {{ someone.title }} </h5>
+          <div> {{ someone.listingdescription }}</div>
+          <span class="badge badge-info float-left">People</span>
+        </div>
+      </div>
+    </div>
+    <br />
     {% endfor %}
     {% endif %}
+
 
   </div>
 </div>
