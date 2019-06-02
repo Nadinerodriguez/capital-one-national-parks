@@ -54,6 +54,15 @@ Website can be found [here.](https://www.nadinebrodriguez.com)
 - [x] Map Visualizations
 - [ ] NPS Relevant Symbols
 
+## Challenges
+- Some API endpoints are [broken](https://developer.nps.gov/api/v1/campgrounds?q=fort&api_key={API_KEY}&fields=images). Could have used image resources for campgrounds 
+- Not sure how to implement data caching, this could help improve speeds from API calls
+- Implementing search suggestions
+- Some JSON data returned for some locations have a lot of empty fields. This makes the user experience a little jarring.
+- Passing data to other pages using forms and passing form data to django python files
+- Styling a sticky "Categories" section on detail page
+- Style a footer that fixes to bottom of viewport when there is not enough content
+
 ## License 
 Copyright 2019 Nadine Rodriguez
 
