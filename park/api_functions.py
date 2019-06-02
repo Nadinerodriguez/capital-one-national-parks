@@ -86,7 +86,8 @@ def find_parks_with_search(query):
     global API_KEY
 
     fields = "&fields=images"
-    url = "https://developer.nps.gov/api/v1/parks?q=" + query + "&api_key=" + API_KEY + fields
+    limit = "&limit=19" # Api limit returns 1 extra, so 19 = 20
+    url = "https://developer.nps.gov/api/v1/parks?q=" + query + "&api_key=" + API_KEY + fields + limit
 
     response = requests.get(url)
     json_object = response.json()

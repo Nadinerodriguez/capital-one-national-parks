@@ -235,13 +235,16 @@
         {% else %}
         <!-- If we have alerts-->
         {% for alert in alerts %}
-        <div>
-          <div> {{ alert.category }} </div>
-          <div> {{ alert.title }} </div>
-          <div> {{ alert.description }} </div>
-          <div> {{ alert.url }} </div>
+        <div class="card bg-light">
+          <div class="card-body">
+            <h5 class="card-title"> {{ alert.category }} </h5>
+            <div class="text-danger font-weight-bold"> {{ alert.title }} </div>
+            <div> {{ alert.description }} </div>
+            <a href="{{ alert.url }}" class="card-link">Learn more</a>
+            <span class="badge badge-success float-right">Alert</span>
+          </div>
         </div>
-        <br />
+        <br/>
         {% endfor %}
         {% endif %}
 

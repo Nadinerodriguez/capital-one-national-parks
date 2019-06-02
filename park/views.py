@@ -3,9 +3,6 @@ from django.http import HttpResponse
 from . import api_functions
 from . import api_keys
 
-def test(request):
-    return render(request,'park/test.html')
-
 def index(request):
     return render(request, 'park/index.html')
 

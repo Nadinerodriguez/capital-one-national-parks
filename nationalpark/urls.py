@@ -23,5 +23,4 @@ urlpatterns = [
     path('search/', park.views.search, name='search'),
     path('', park.views.index, name='index'),
     path('results/detail/', park.views.detail, name='detail'),
-    path('test/', park.views.test, name='test'),
 ]
