@@ -66,6 +66,7 @@
   var long = "{{ long }}";
   console.log(lat);
   console.log(long);
+
   // create map
   if (lat != "" && long != "") {
     console.log("Creating a map!");
@@ -77,6 +78,7 @@
       id: 'mapbox.streets',
       accessToken: '{{ access_token }}'
     }).addTo(mymap);
+    
     // add marker
     var marker = L.marker([lat, long]).addTo(mymap);
     marker.bindPopup("<strong>{{ full_name }}</strong>").openPopup();
