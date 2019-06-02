@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>National Park Service Home</title>
+  <title id="website-title">National Park Service Home</title>
   <!-- Bootstrap css -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -16,6 +16,16 @@
   .nav-footer-bg-colors{
     background-color: #00897b;
   }
+  /* Body and content ensures that the footer is always at the bottom */
+  body{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .content{
+    flex:1 0 auto;
+  }
+
   </style>
 
   <!-- Optional JavaScript -->
@@ -24,7 +34,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-    <!-- LEAFLETJS CSS -->
+    <!-- LEAFLETJS(MAP) CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
     integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
     crossorigin=""/>
@@ -36,6 +46,7 @@
 </head>
 
 <body>
+  <section class="content">
   <!-- Navbar -->
   <nav class="navbar navbar-expand-md navbar-dark nav-footer-bg-colors" id="main-nav-bar">
     <a class="navbar-brand" href="{% url 'index' %}">National Park Service</a>
@@ -51,7 +62,6 @@
       </ul>
       <form id="search-form" class="form-inline my-2 my-md-0" method="get" action={% url 'search' %}>
         <input name="search-query" class="form-control" type="text" placeholder="Search for a park">
-        <!-- <input type="submit" class="btn btn-success ml-2" value="Search"> -->
         <button onclick="submitSearchForm()"type="button" class="btn btn-success ml-2">Search</button>
       </form>
     </div>
@@ -75,7 +85,6 @@
         </div>
         <div class="modal-body">
           <form action="{% url 'results' %}" method="GET">
-            <!-- {% csrf_token %} -->
 
             <div class="form-group">
               <select name="state-picked" class="custom-select custom-select-lg" size="10">
@@ -144,6 +153,7 @@
   </div>
   {% block content %}
   {% endblock %}
+  </section>
 
   <!-- Footer -->
   <footer class="footer nav-footer-bg-colors pt-2 pd-2">

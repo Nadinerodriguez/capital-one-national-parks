@@ -29,6 +29,8 @@
     $('body').attr('data-spy', 'scroll');
     $('body').attr('data-target', '#list-example');
     $('body').scrollspy({ target: '#list-example' });
+
+    document.getElementById("website-title").innerHTML = "{{ overview.0.fullName }}";
   });
 </script>
 
