@@ -25,7 +25,7 @@ SECRET_KEY = '6&u4^1=n5cha*0kh#z93(_guwb@xll+26*&wjioo&s6=&#500t'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['www.nadinebrodriguez.com', 'nadinebrodriguez.com']
 
 
 # Application definition
