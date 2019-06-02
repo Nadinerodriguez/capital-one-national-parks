@@ -82,6 +82,22 @@ def convert_abbreviation_to_full(state_abbrev):
     }
     return states_dictionary[state_abbrev]
 
+def find_parks_with_search(query):
+    global API_KEY
+
+    fields = "&fields=images"
+    url = "https://developer.nps.gov/api/v1/parks?q=" + query + "&api_key=" + API_KEY + fields
+
+    response = requests.get(url)
+    json_object = response.json()
+    locations = json_object['data']
+
+    return {
+        'locations': locations,
+        'search_query': query,
+     }
+
+
 def find_alerts(park_code):
     global api_key
     url = "https://developer.nps.gov/api/v1/alerts?parkCode=" + park_code + "&api_key=" + API_KEY

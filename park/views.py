@@ -21,18 +21,16 @@ def results(request):
             context = api_functions.find_parks(state_picked) # list of locations for state
     return render(request, 'park/results.html', context)
 
-# def detail(request):
-#     if request.method == "GET":
-#         park_selected = request.GET.get('park-selected')
-#
-#         #If user did not pick a park/Accessed url directly
-#         if park_selected is None:
-#             return HttpResponse("Error. Please pick a park from the results page")
-#
-#         else:
-#             print("A park was selected:", park_selected)
-#             pass
-#     return render(request, 'park/detail.html')
+def search(request):
+    if request.method == "GET":
+        query = request.GET.get('search-query')
+
+        if query is None:
+            return HttpResponse("Error. Please search/pick a state from the home page.")
+        else:
+            context = api_functions.find_parks_with_search(query)
+    return render(request, 'park/results.html', context)
+
 
 def detail(request):
     if request.method == "POST":

@@ -37,7 +37,7 @@
 
 <body>
   <!-- Navbar -->
-  <nav id="main-nav-bar" class="navbar navbar-expand-md navbar-dark nav-footer-bg-colors">
+  <nav class="navbar navbar-expand-md navbar-dark nav-footer-bg-colors" id="main-nav-bar">
     <a class="navbar-brand" href="{% url 'index' %}">National Park Service</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -46,14 +46,22 @@
     <div class="collapse navbar-collapse" id="navbarsExample04">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a id="nav-find-btn" class="nav-link" data-target="#state-modal" data-toggle="modal" href="#">Find a park</a>
+          <a id="nav-find-btn" class="nav-link" data-target="#state-modal" data-toggle="modal" href=#state-modal>Find a Park</a>
         </li>
       </ul>
-      <form class="form-inline my-2 my-md-0">
-        <input class="form-control" type="text" placeholder="Search">
+      <form id="search-form" class="form-inline my-2 my-md-0" method="get" action={% url 'search' %}>
+        <input name="search-query" class="form-control" type="text" placeholder="Search for a park">
+        <!-- <input type="submit" class="btn btn-success ml-2" value="Search"> -->
+        <button onclick="submitSearchForm()"type="button" class="btn btn-success ml-2">Search</button>
       </form>
     </div>
   </nav>
+
+  <script>
+    function submitSearchForm() {
+      document.getElementById("search-form").submit();
+    }
+  </script>
 
   <!-- Modal to pick states -->
   <div class="modal fade" id="state-modal" tabindex="-1" role="dialog" aria-labelledby="state-modal-title" aria-hidden="true">

@@ -20,6 +20,7 @@ import park.views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('results/', park.views.results, name ='results'),
+    path('search/', park.views.search, name='search'),
     path('', park.views.index, name='index'),
     path('results/detail/', park.views.detail, name='detail'),
     path('test/', park.views.test, name='test'),
