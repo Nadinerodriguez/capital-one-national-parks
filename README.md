@@ -1,3 +1,6 @@
+<img src="capital-one-logo.png" style="width: 100%" />
+
+
 # Capital One Software Engineering Summit (Summer 2019)
 
 ## Description
