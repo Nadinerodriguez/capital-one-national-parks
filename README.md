@@ -3,13 +3,9 @@
 
 # Capital One Software Engineering Summit (Summer 2019)
 
-## Description
+Submission for CapitalOne's Mindsumo [challenge](https://www.mindsumo.com/contests/national-park-api) to Build a Web App that serves as a National Park Service Information Kiosk.
 
-**Challenge:** Build a web app that serves as a National Park Service information kiosk
-
-**Link:** https://www.mindsumo.com/contests/national-park-api
-
-**Link to the website I created:** https://www.nadinebrodriguez.com/
+Website can be found [here.](https://www.nadinebrodriguez.com)
 
 ## Tech Stack
 
