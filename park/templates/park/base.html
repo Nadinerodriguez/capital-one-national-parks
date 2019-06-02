@@ -16,7 +16,7 @@
   .nav-footer-bg-colors{
     background-color: #00897b;
   }
-  /* Body and content ensures that the footer is always at the bottom */
+  /* Body and .content ensures that the footer always stays at the bottom */
   body{
     height: 100vh;
     display: flex;
@@ -85,7 +85,6 @@
         </div>
         <div class="modal-body">
           <form action="{% url 'results' %}" method="GET">
-            <!-- {% csrf_token%} -->
 
             <div class="form-group">
               <select name="state-picked" class="custom-select custom-select-lg" size="10">

@@ -1,0 +1,57 @@
+<!-- Populate articles -->
+{% if articles_total == "0" %} <!-- If data is empty from the API CALL print the following -->
+<div>No current articles for this location</div>
+<br />
+{% else %}
+<!-- If we have articles -->
+<div class="container mt-4">
+  <div class="row">
+    {% for article in articles %}
+
+    <!-- Create card decks for every 2 iterations -->
+    {% if forloop.counter0|divisibleby:"2" == True %}
+    <div class="col-12 pb-4">
+      <div class="card-deck" id="card-deck__{{forloop.counter0}}">
+        {% endif %}
+
+        <div class="card rounded-0">
+
+          {% if article.listingimage.url == "" %}
+          <img class="card-img-top center-cropped bg-dark rounded-0" src=http://www.sclance.com/pngs/image-placeholder-png/image_placeholder_png_698412.png />
+          {% else %}
+          <img class="card-img-top center-cropped bg-dark rounded-0" src="{{ article.listingimage.url }}" alt="article image" />
+          {% endif %}
+
+          <div class="card-body">
+            <h5 class="card-title">
+              <a href="{{ article.url }}" class="btn-link text-body font-weight-bold">{{ article.title }}</a>
+            </h5>
+            <p class="card-text">{{ article.listingdescription }}</p>
+
+          </div>
+          <div class="card-footer">
+            <!-- <a href="{{ article.url }}" class="btn btn-primary">Article link</a> -->
+            <span class="badge badge-success float-right">Article</span>
+          </div>
+        </div>
+
+        {% if forloop.counter0|divisibleby:"2" == False %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Edge case: Ensure we have enough closing divs and that the last article only takes up col-6 space -->
+    {% if forloop.last and forloop.counter0|divisibleby:"2" == True %}
+  </div>
+</div>
+
+<script>
+  var lastArticleCardDeck = document.getElementById("card-deck__{{forloop.counter0}}");
+  lastArticleCardDeck.classList.remove("card-deck");
+  lastArticleCardDeck.parentElement.classList.replace("col-12", "col-6");
+</script>
+{% endif %}
+{% endfor %}
+</div>
+</div>
+{% endif %}

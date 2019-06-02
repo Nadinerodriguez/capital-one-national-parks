@@ -1,0 +1,116 @@
+<!-- Provide an image/carousel in this section -->
+{% if not overview.0.images.0.url%} <!-- If we have 0 images-->
+{% elif not overview.0.images.1.url %} <!-- -If we have 1 image -->
+<img src="{{ overview.0.images.0.url }}" width="100%" class="img-fluid" />
+{% else %} <!-- More than one image, build our carousel -->
+<div id="park-image-slideshow" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    {% for image in overview.0.images %}
+
+      {% if forloop.first %} <!-- If first iteration, it's active -->
+        <li data-target="#park-image-slideshow" data-slide-to="{{forloop.counter0}}" class="active"></li>
+      {% else %}
+        <li data-target="#park-image-slideshow" data-slide-to="{{forloop.counter0}}"></li>
+      {% endif %}
+
+    {% endfor %}
+  </ol>
+
+  <div class="carousel-inner bg-dark">
+    {% for image in overview.0.images %}
+
+      {% if forloop.first %}
+        <div class="carousel-item active">
+          <img class="d-block w-100 center-cropped" src="{{image.url}}" />
+        </div>
+      {% else %}
+        <div class="carousel-item">
+          <img class="d-block w-100 center-cropped" src="{{image.url}}" />
+        </div>
+      {% endif %}
+
+    {% endfor %}
+  </div>
+
+  <a class="carousel-control-prev" href="#park-image-slideshow" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#park-image-slideshow" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+{% endif %}
+<br />
+
+<div><strong>Description: </strong></div>
+<div> {{ overview.0.description }} </div>
+<br />
+
+<div><strong>Directions: </strong></div>
+<div>{{ overview.0.directionsInfo }}</div>
+<br />
+
+<div><strong>Fees:</strong></div>
+<div class="container">
+  <div class="row">
+    {% for entrance_fee in overview.0.entranceFees%}
+    <div class="col-4 mb-5">
+      <div>{{ entrance_fee.title }}</div>
+      <div class="text-muted font-weight-bold">Cost: ${{ entrance_fee.cost|slice:4 }}</div><!-- slive:4 = 4 decimal places -->
+    </div>
+    <br />
+    {% endfor %}
+  </div>
+</div>
+<br />
+
+<div><strong>Operating hours: </strong></div>
+{% for operating_hours in overview.0.operatingHours %}
+<div>{{ operating_hours.description }}</div>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">Day</th>
+      <th scope="col">Hours</th>
+    </tr>
+    <tbody>
+      <tr>
+        <td>Sunday</td>
+        <td>{{ operating_hours.standardHours.sunday}}</td>
+      </tr>
+
+      <tr>
+        <td>Monday</td>
+        <td>{{ operating_hours.standardHours.monday}}</td>
+      </tr>
+
+      <tr>
+        <td>Tuesday</td>
+        <td>{{ operating_hours.standardHours.tuesday}}</td>
+      </tr>
+
+      <tr>
+        <td>Wednesday</td>
+        <td>{{ operating_hours.standardHours.wednesday}}</td>
+      </tr>
+
+      <tr>
+        <td>Thursday</td>
+        <td>{{ operating_hours.standardHours.thursday}}</td>
+      </tr>
+
+      <tr>
+        <td>Friday</td>
+        <td>{{ operating_hours.standardHours.friday}}</td>
+      </tr>
+
+      <tr>
+        <td>Saturday</td>
+        <td>{{ operating_hours.standardHours.saturday}}</td>
+      </tr>
+    </tbody>
+  </thead>
+</table>
+{% endfor %}

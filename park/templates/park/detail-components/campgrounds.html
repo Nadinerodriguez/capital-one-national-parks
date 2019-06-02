@@ -1,0 +1,20 @@
+<!-- Populate campgrounds -->
+{% if campgrounds_total == "0" %} <!-- If data is empty from the API CALL print the following -->
+<div>No current campgrounds for this location</div>
+<br />
+{% else%}
+{% for campground in campgrounds %}
+
+
+<div class="container bg-light rounded border place-card">
+  <div class="row">
+    <div class="col-12">
+      <h5> {{ campground.name }} </h5>
+      <div> {{ campground.description }}</div>
+      <span class="badge badge-success float-right">Campground</span>
+    </div>
+  </div>
+</div>
+<br />
+{% endfor %}
+{% endif %}

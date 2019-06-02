@@ -1,0 +1,57 @@
+<!-- Shows a map view with a hide/show button on the top of the page -->
+<div class="container mt-3 mb-5">
+  <div class="accordion" id="map-view-accordion">
+    <div class="card rounded border shadow-sm">
+      <div id="map-view-card">
+        <h2 class="mb-0">
+          <a id="map-view-button" class="btn btn-secondary btn-block" data-toggle="collapse" href="#collapseOne" role="button" aria-expanded="true" aria-controls="collapseOne">
+            <label style="font-size: 24px; font-weight: bold;">Hide/Show Map View</label>
+          </a>
+        </h2>
+      </div>
+
+      <div id="collapseOne" class="collapse show" aria-labelledby="map-view-card" data-parent="#map-view-accordion">
+        <div class="card-body">
+          <div id="mapid">
+            <!-- If no map is given, it hides the map view -->
+            <label id="no-map" hidden>No current map coordinates available for this location.</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  /*
+  Note: This script needs to be placed after #mapid
+  From leafletjs
+  */
+  var lat = "{{ lat }}";
+  var long = "{{ long }}";
+  console.log(lat);
+  console.log(long);
+
+  // create map
+  if (lat != "" && long != "") {
+    console.log("Creating a map!");
+    var mymap = L.map('mapid').setView([lat, long], 13);
+
+    // render map layer
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      maxZoom: 18,
+      id: 'mapbox.streets',
+      accessToken: '{{ access_token }}'
+    }).addTo(mymap);
+
+    // add marker
+    var marker = L.marker([lat, long]).addTo(mymap);
+    marker.bindPopup("<strong>{{ full_name }}</strong>").openPopup();
+  } else {
+    var noMap = document.getElementById('no-map');
+    noMap.hidden = false;
+    $('#map-view-button').attr('aria-expanded', 'false');
+    $('#collapseOne').removeClass('show');
+  }
+</script>

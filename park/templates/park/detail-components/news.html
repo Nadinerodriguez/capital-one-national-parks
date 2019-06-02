@@ -1,0 +1,30 @@
+<!-- Populate news -->
+{% if news_total == "0" %} <!-- If data is empty from the API CALL print the following -->
+<div>No current news for this location</div>
+<br />
+{% else %}
+{% for news_release in news_releases %}
+
+<div class="card bg-light">
+  <div class="card-body">
+    <h5 class="card-title">
+      <span class="badge badge-success">News Release</span>
+      {{ news_release.title }}
+    </h5>
+    <h6 id="news-pub-date__{{forloop.counter0}}" class="card-subtitle mb-2 text-muted">
+      <script>
+        // script to format date published
+        var datePub = "{{ news_release.releasedate }}";
+        var date = new Date(datePub);
+        var formattedDate = date.toString().substring(4,15);
+        // console.log(formattedDate);
+        document.getElementById("news-pub-date__{{forloop.counter0}}").innerHTML = "Date published: " + formattedDate;
+      </script>
+    </h6>
+    <p class="card-text">{{ news_release.abstract }}</p>
+    <a href="{{ news_release.url }}" class="card-link">Learn more</a>
+  </div>
+</div>
+<br/>
+{% endfor %}
+{% endif %}

@@ -1,0 +1,19 @@
+<!-- Populate visitor centers -->
+{% if visitor_centers_total == "0" %} <!-- If data is empty from the API CALL print the following -->
+<div>No current visitor centers for this location</div>
+<br />
+{% else %}
+{% for visitor_center in visitor_centers %}
+
+<div class="container bg-light rounded border place-card">
+  <div class="row">
+    <div class="col-12">
+      <h5> {{ visitor_center.name }} </h5>
+      <div> {{ visitor_center.description }}</div>
+      <span class="badge badge-success float-right">Visitor center</span>
+    </div>
+  </div>
+</div>
+<br />
+{% endfor %}
+{% endif %}
