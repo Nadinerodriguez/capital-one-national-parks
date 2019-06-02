@@ -1,48 +1,47 @@
+<img src="capital-one-logo.png" style="width: 100%" />
+
+
 # Capital One Software Engineering Summit (Summer 2019)
 
-## Description
+Submission for CapitalOne's Mindsumo [challenge](https://www.mindsumo.com/contests/national-park-api) to Build a Web App that serves as a National Park Service Information Kiosk.
 
-**Challenge:** Build a web app that serves as a National Park Service information kiosk
-
-**Link:** https://www.mindsumo.com/contests/national-park-api
-
-**Link to the website I created:** https://www.nadinebrodriguez.com/
+Website can be found [here.](https://www.nadinebrodriguez.com)
 
 ## Tech Stack
+**Backend:**
+- [Django](https://www.djangoproject.com/)
 
-### Backend:
-- Django
-- National Park's API
+**Frontend:**
+- HTML/CSS/JavaScript
+- [jQuery](https://jquery.com/)
+- [Bootstrap](https://getbootstrap.com/)
 
-### FrontEnd:
-- HTML
-- CSS
-- JavaScript
-- jQuery
-- Bootstrap
+**Libraries and APIs**
+- [National Park API](https://www.nps.gov/subjects/developer/api-documentation.htm#/) to present national park information
+- [Requests](https://2.python-requests.org/en/master/) to parse JSON data
+- [LeafletJS](https://leafletjs.com/) for rendering park map in javascript
+- [Mapbox](https://www.mapbox.com/) for providing map resources
 
 ## Features
-
-### Required:
-- [ ] Filtering
+**Required:**
+- [x] Filter
     - State
-    - Designations
-- [ ] Searching
+- [x] Search
     - Name
     - Keyword
-- [ ] Destination
+- [x] List Details
     - Alerts
     - Articles
+    - News Releases
     - Events
-    - News Release
-- [ ] Detail
+    - Places
     - Visitor centers
     - Campgrounds
     - Lesson plans
     - People
 
-### Stretch:
-- [ ] Map Visualizations
+**Stretch:**
+- [x] Map Visualizations
 - [ ] NPS Relevant Symbols
 
 ## License 
