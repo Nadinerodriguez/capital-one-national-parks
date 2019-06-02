@@ -1,4 +1,4 @@
-""" This file holds all api keys. Not pushed onto github """
+""" This file holds all api keys. """
 
 def get_nps_api_key():
     return "BfjJkQ8FsI9gI33vN95G8f2tunWF5qZFYBZFOwb0"
