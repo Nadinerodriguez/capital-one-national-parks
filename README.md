@@ -22,7 +22,17 @@ Website can be found [here.](https://www.nadinebrodriguez.com)
 - [LeafletJS](https://leafletjs.com/) for rendering park map in javascript
 - [Mapbox](https://www.mapbox.com/) for providing map resources
 
-## Features
+## Walkthrough
+**Home Page**
+<img src="find-a-park.gif" /><br />
+
+**Results Page**
+<img src="search.gif" /><br />
+
+**Detail Page**
+<img src="detail.gif" /><br />
+
+## Features Implemented
 **Required:**
 - [x] Filter
     - State
