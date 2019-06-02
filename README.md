@@ -8,40 +8,38 @@ Submission for CapitalOne's Mindsumo [challenge](https://www.mindsumo.com/contes
 Website can be found [here.](https://www.nadinebrodriguez.com)
 
 ## Tech Stack
+**Backend:**
+- [Django](https://www.djangoproject.com/)
 
-### Backend:
-- Django
-- National Park's API
+**Frontend:**
+- HTML/CSS/JavaScript
+- [jQuery](https://jquery.com/)
+- [Bootstrap](https://getbootstrap.com/)
 
-### FrontEnd:
-- HTML
-- CSS
-- JavaScript
-- jQuery
-- Bootstrap
+**Libraries and APIs**
+- [Requests](https://2.python-requests.org/en/master/) to parse JSON data
+- [National Park API](https://www.nps.gov/subjects/developer/api-documentation.htm#/)
 
 ## Features
-
-### Required:
-- [ ] Filtering
+**Required:**
+- [x] Filtering
     - State
-    - Designations
-- [ ] Searching
+- [x] Searching
     - Name
     - Keyword
-- [ ] Destination
+- [x] Destination
     - Alerts
     - Articles
     - Events
     - News Release
-- [ ] Detail
+- [x] Detail
     - Visitor centers
     - Campgrounds
     - Lesson plans
     - People
 
-### Stretch:
-- [ ] Map Visualizations
+**Stretch:**
+- [x] Map Visualizations
 - [ ] NPS Relevant Symbols
 
 ## License 
