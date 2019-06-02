@@ -54,9 +54,7 @@ def detail(request):
     else:
         return HttpResponse("Error accessing directly. Please pick a park from the results page.")
 
-    # TODO: build context
     access_token = api_keys.get_mapbox_access_token()
-
     overview_dictionary = api_functions.find_overview_details(park_selected)
     alerts_dictionary = api_functions.find_alerts(park_selected)
     articles_dictionary = api_functions.find_articles(park_selected)
