@@ -17,22 +17,24 @@ Website can be found [here.](https://www.nadinebrodriguez.com)
 - [Bootstrap](https://getbootstrap.com/)
 
 **Libraries and APIs**
+- [National Park API](https://www.nps.gov/subjects/developer/api-documentation.htm#/) to present national park information
 - [Requests](https://2.python-requests.org/en/master/) to parse JSON data
-- [National Park API](https://www.nps.gov/subjects/developer/api-documentation.htm#/)
+- [LeafletJS](https://leafletjs.com/) for rendering park map in javascript
+- [Mapbox](https://www.mapbox.com/) for providing map resources
 
 ## Features
 **Required:**
-- [x] Filtering
+- [x] Filter
     - State
-- [x] Searching
+- [x] Search
     - Name
     - Keyword
-- [x] Destination
+- [x] List Details
     - Alerts
     - Articles
+    - News Releases
     - Events
-    - News Release
-- [x] Detail
+    - Places
     - Visitor centers
     - Campgrounds
     - Lesson plans
