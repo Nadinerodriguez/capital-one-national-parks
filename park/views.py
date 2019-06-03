@@ -3,9 +3,11 @@ from django.http import HttpResponse
 from . import api_functions
 from . import api_keys
 
+# Render for index view
 def index(request):
     return render(request, 'park/index.html')
 
+# Render for results view
 def results(request):
     if request.method == "GET":
         state_picked = request.GET.get('state-picked')
@@ -18,6 +20,7 @@ def results(request):
             context = api_functions.find_parks(state_picked) # list of locations for state
     return render(request, 'park/results.html', context)
 
+# Render for results view (through search)
 def search(request):
     if request.method == "GET":
         query = request.GET.get('search-query')
@@ -29,6 +32,7 @@ def search(request):
     return render(request, 'park/results.html', context)
 
 
+# Render for detail view
 def detail(request):
     if request.method == "POST":
         park_selected = request.POST.get('park-code')

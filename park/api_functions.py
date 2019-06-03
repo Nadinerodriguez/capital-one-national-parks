@@ -27,7 +27,7 @@ def find_parks(state_picked):
     }
 
 def convert_abbreviation_to_full(state_abbrev):
-    """ Helper function for formatting """
+    """ Helper function for formatting state """
     states_dictionary = {
         "AL": "Alabama",
         "AK": "Alaska",
@@ -83,6 +83,7 @@ def convert_abbreviation_to_full(state_abbrev):
     return states_dictionary[state_abbrev]
 
 def find_parks_with_search(query):
+    """ Search parks using query """
     global API_KEY
 
     fields = "&fields=images"
@@ -100,6 +101,7 @@ def find_parks_with_search(query):
 
 
 def find_alerts(park_code):
+    """ Find alerts from park code """
     global api_key
     url = "https://developer.nps.gov/api/v1/alerts?parkCode=" + park_code + "&api_key=" + API_KEY
 
@@ -115,6 +117,7 @@ def find_alerts(park_code):
      }
 
 def find_articles(park_code):
+    """ Find articles from park code """
     global api_key
     url = "https://developer.nps.gov/api/v1/articles?parkCode=" + park_code + "&api_key=" + API_KEY
 
@@ -130,6 +133,7 @@ def find_articles(park_code):
      }
 
 def find_news(park_code):
+    """ Find news from park code """
     global api_key
     url = "https://developer.nps.gov/api/v1/newsreleases?parkCode=" + park_code + "&api_key=" + API_KEY
 
@@ -145,6 +149,7 @@ def find_news(park_code):
      }
 
 def find_events(park_code):
+    """ Find events from park code """
     global api_key
     url = "https://developer.nps.gov/api/v1/events?parkCode=" + park_code + "&api_key=" + API_KEY
 
@@ -160,6 +165,7 @@ def find_events(park_code):
      }
 
 def find_visitor_centers(park_code):
+    """ Find visitor centers from park code """
     global API_KEY
 
     url = "https://developer.nps.gov/api/v1/visitorcenters?parkCode=" + park_code + "&api_key=" + API_KEY
@@ -176,6 +182,7 @@ def find_visitor_centers(park_code):
     }
 
 def find_campgrounds(park_code):
+    """ Find campgrounds from park code """
     global API_KEY
 
     url = "https://developer.nps.gov/api/v1/campgrounds?parkCode=" + park_code + "&api_key=" + API_KEY
@@ -192,6 +199,7 @@ def find_campgrounds(park_code):
     }
 
 def find_places(park_code):
+    """ Find places from park code """
     global API_KEY
 
     url = "https://developer.nps.gov/api/v1/places?parkCode=" + park_code + "&api_key=" + API_KEY
@@ -208,6 +216,7 @@ def find_places(park_code):
     }
 
 def find_lesson_plans(park_code):
+    """ Find lesson plans from park code """
     global API_KEY
 
     url = "https://developer.nps.gov/api/v1/lessonplans?parkCode=" + park_code + "&api_key=" + API_KEY
@@ -224,6 +233,7 @@ def find_lesson_plans(park_code):
     }
 
 def find_people(park_code):
+    """ Find people from park code """
     global API_KEY
 
     url = "https://developer.nps.gov/api/v1/people?parkCode=" + park_code + "&api_key=" + API_KEY
@@ -239,8 +249,8 @@ def find_people(park_code):
         'people': people
     }
 
-
 def find_overview_details(park_code):
+    """ Find overview details from park code """
     global API_KEY
 
     fields = "&fields=images,entranceFees,entrancePasses,operatingHours,exceptions"
