@@ -2,43 +2,44 @@
 {% if events_total == "0" %} <!-- If data is empty from the API CALL print the following -->
 <div>No current events for this location</div>
 <br />
-{% else %}
-{% for event in events %}
-<div class="card rounded-0">
-  <div class="card-header">
-    <h5><span class="badge badge-success">Event</span>&nbsp;{{ event.title }}</h5>
-  </div>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-8">
-        <!-- Event Description Column -->
-        <div class="card-body">
-          <p class="card-text">
-            <!-- Api endpoint for events returns some html in a string
-            We need to parse this string into HTML code using the safe filter -->
-            {{ event.description|safe }}
-          </p>
+{% else %}
+  {% for event in events %}
+  <div class="card rounded-0">
+    <div class="card-header">
+      <h5><span class="badge badge-success">Event</span>&nbsp;{{ event.title }}</h5>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-8">
+          <!-- Event Description Column -->
+          <div class="card-body">
+            <p class="card-text">
+              <!-- Api endpoint for events returns some html in a string
+              We need to parse this string into HTML code using the safe filter -->
+              {{ event.description|safe }}
+            </p>
+          </div>
+        </div>
+
+        <div class="col-4 pl-0 pr-0 bg-dark">
+          <!-- Image Column -->
+          {% if not event.images.0.url %} <!-- If we have 0 images -->
+          <img src="http://www.sclance.com/pngs/image-placeholder-png/image_placeholder_png_698412.png" class="img-fluid pt-5 pb-5" width="100%"/>
+          {% else %}
+          <img src="https://www.nps.gov{{ event.images.0.url }}" class="img-fluid pt-5 pb-5" width="100%"/>
+          {% endif %}
         </div>
       </div>
+    </div>
 
-      <div class="col-4 pl-0 pr-0 bg-dark">
-        <!-- Image Column -->
-        {% if not event.images.0.url %} <!-- If we have 0 images -->
-        <img src="http://www.sclance.com/pngs/image-placeholder-png/image_placeholder_png_698412.png" class="img-fluid pt-5 pb-5" width="100%"/>
-        {% else %}
-        <img src="https://www.nps.gov{{ event.images.0.url }}" class="img-fluid pt-5 pb-5" width="100%"/>
-        {% endif %}
-      </div>
+    <div class="card-footer text-muted">
+      {% for type in event.types %}
+      <span class="badge badge-secondary">{{ type }}</span>
+      {% endfor %}
     </div>
   </div>
-
-  <div class="card-footer text-muted">
-    {% for type in event.types %}
-    <span class="badge badge-secondary">{{ type }}</span>
-    {% endfor %}
-  </div>
-</div>
-<br />
-{% endfor %}
+  <br />
+  {% endfor %}
 {% endif%}

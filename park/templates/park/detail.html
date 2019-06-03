@@ -30,6 +30,7 @@
     $('body').attr('data-target', '#list-example');
     $('body').scrollspy({ target: '#list-example' });
 
+    // Set page title
     document.getElementById("website-title").innerHTML = "{{ overview.0.fullName }}";
 
   });
@@ -37,12 +38,11 @@
 
 {% include 'park/detail-components/map.html' %}
 
-<h1 class="text-center mb-5"> {{ overview.0.fullName }} </h1> <!-- Name of park -->
+<h1 class="text-center mb-5"> {{ overview.0.fullName }} </h1> <!-- Heading: Name of park -->
 
-<!-- Holds our scroll spy container -->
+<!-- *********************** Scroll spy container **************************-->
 <div class="container mb-3">
   <div class="row">
-
     <!-- Holds a sticky category list  -->
     <div class="col-3">
       <div id="list-example" class="list-group sticky-top sticky-offset">
@@ -60,24 +60,33 @@
     <div class="col-9">
       <div data-spy="scroll" data-target="#list-example" data-offset="0" class="scrollspy-example">
 
+        <!--  Overview Section -->
         <h3 class="border-bottom text-center" id="list-item-1">Overview</h3>
         {% include 'park/detail-components/overview.html' %}
+
+        <!--  Alerts Section -->
         <h3 class="border-bottom text-center" id="list-item-2">Alerts</h3>
         {% include 'park/detail-components/alerts.html' %}
+
+        <!--  Articles, News, Events section -->
         <h3 class="border-bottom text-center" id="list-item-3">Articles, News, Events</h3>
         {% include 'park/detail-components/articles.html' %}
         {% include 'park/detail-components/news.html' %}
         {% include 'park/detail-components/events.html' %}
+
+        <!--  Places, Visitor Centers, Campgrounds section -->
         <h3 class="border-bottom text-center" id="list-item-4">Places, Visitor Centers, Campgrounds</h3>
         {% include 'park/detail-components/places.html' %}
         {% include 'park/detail-components/visitor-centers.html' %}
         {% include 'park/detail-components/campgrounds.html' %}
+
+        <!--  Educational Info Section -->
         <h3 id="list-item-5" class="border-bottom text-center">Educational Information</h3>
         {% include 'park/detail-components/educational-info.html' %}
 
         </div>
       </div>
-    <!-- 2 extra divs to ensure structure integrity is maintained due to our last article producing 2 more divs -->
+    <!-- 2 extra divs to ensure structural integrity is maintained due to our last article producing 2 more divs (check articles.html) -->
   </div>
 </div>
 

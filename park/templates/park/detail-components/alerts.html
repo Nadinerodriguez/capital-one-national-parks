@@ -1,19 +1,21 @@
+
 <!-- Populate alerts -->
 {% if alerts_total == "0" %} <!-- If data is empty from the API CALL print the following -->
 <div>No current alerts for this location</div>
 <br />
+
 {% else %}
 <!-- If we have alerts-->
-{% for alert in alerts %}
-<div class="card bg-light">
-  <div class="card-body">
-    <h5 class="card-title"> {{ alert.category }} </h5>
-    <div class="text-danger font-weight-bold"> {{ alert.title }} </div>
-    <div> {{ alert.description }} </div>
-    <a href="{{ alert.url }}" class="card-link">Learn more</a>
-    <span class="badge badge-success float-right">Alert</span>
+  {% for alert in alerts %}
+  <div class="card bg-light">
+    <div class="card-body">
+      <h5 class="card-title"> {{ alert.category }} </h5>
+      <div class="text-danger font-weight-bold"> {{ alert.title }} </div>
+      <div> {{ alert.description }} </div>
+      <a href="{{ alert.url }}" class="card-link">Learn more</a>
+      <span class="badge badge-success float-right">Alert</span>
+    </div>
   </div>
-</div>
-<br/>
-{% endfor %}
+  <br/>
+  {% endfor %}
 {% endif %}

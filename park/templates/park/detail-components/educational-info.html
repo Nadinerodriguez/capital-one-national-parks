@@ -1,35 +1,37 @@
 <!-- Populate Educational Information -->
 {% if lesson_plans_total == "0" %} <!-- If data is empty from the API CALL print the following -->
 <div>No current lesson plans for this location</div>
+
 {% else %}
-{% for lesson_plan in lesson_plans %}
-<div class="card bg-light">
-  <div class="card-body">
-    <h5 class="card-title">{{ lesson_plan.title }}</h5>
-    <div class="text-dark font-italic"> {{ lesson_plan.subject }} </div>
-    <div>{{ lesson_plan.gradeLevel }} </div>
-    <div> {{ lesson_plan.questionObjective }} </div>
-    <a href="{{ lesson_plan.url }}" class="card-link">Learn more</a>
-    <span class="badge badge-success float-right">Lesson Plans</span>
+  {% for lesson_plan in lesson_plans %}
+  <div class="card bg-light">
+    <div class="card-body">
+      <h5 class="card-title">{{ lesson_plan.title }}</h5>
+      <div class="text-dark font-italic"> {{ lesson_plan.subject }} </div>
+      <div>{{ lesson_plan.gradeLevel }} </div>
+      <div> {{ lesson_plan.questionObjective }} </div>
+      <a href="{{ lesson_plan.url }}" class="card-link">Learn more</a>
+      <span class="badge badge-success float-right">Lesson Plans</span>
+    </div>
   </div>
-</div>
-<br/>
-{% endfor %}
+  <br/>
+  {% endfor %}
 {% endif %}
 
 <!-- Populate People -->
 {% if people_total == "0" %} <!-- If data is empty from the API CALL print the following -->
 <div>No current facts on people for this location</div>
+
 {% else %}
-{% for someone in people %}
-<div class="card bg-light">
-  <div class="card-body">
-    <h5 class="card-title">{{ someone.title }}</h5>
-    <div> {{ someone.listingdescription }} </div>
-    <a href="{{ someone.url }}" class="card-link">Learn more</a>
-    <span class="badge badge-success float-right">People</span>
+  {% for someone in people %}
+  <div class="card bg-light">
+    <div class="card-body">
+      <h5 class="card-title">{{ someone.title }}</h5>
+      <div> {{ someone.listingdescription }} </div>
+      <a href="{{ someone.url }}" class="card-link">Learn more</a>
+      <span class="badge badge-success float-right">People</span>
+    </div>
   </div>
-</div>
-<br/>
-{% endfor %}
+  <br/>
+  {% endfor %}
 {% endif %}

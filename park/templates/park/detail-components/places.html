@@ -1,25 +1,27 @@
 <!-- Populate places -->
+
 {% if places_total == "0" %} <!-- If data is empty from the API CALL print the following -->
 <div>No current places for this location</div>
 <br />
-{% else %}
-{% for place in places %}
-<div class="container bg-light rounded border place-card">
-  <div class="row">
-    <!-- Column to hold place image -->
-    <div class="col-4">
-      <img src="{{ place.listingimage.url }}" width="100%" class="img-fluid"/>
-    </div>
 
-    <!-- Column to hold place description -->
-    <div class="col-8">
-      <h5>{{ place.title }}</h5>
-      <div> {{ place.listingdescription }}</div>
-      <a href="{{ place.url }}" class="card-link">Learn more</a>
-      <span class="badge badge-success float-right">Place</span>
+{% else %}
+  {% for place in places %}
+  <div class="container bg-light rounded border place-card">
+    <div class="row">
+      <!-- Column to hold place image -->
+      <div class="col-4">
+        <img src="{{ place.listingimage.url }}" width="100%" class="img-fluid"/>
+      </div>
+
+      <!-- Column to hold place description -->
+      <div class="col-8">
+        <h5>{{ place.title }}</h5>
+        <div> {{ place.listingdescription }}</div>
+        <a href="{{ place.url }}" class="card-link">Learn more</a>
+        <span class="badge badge-success float-right">Place</span>
+      </div>
     </div>
   </div>
-</div>
-<br />
-{% endfor %}
+  <br />
+  {% endfor %}
 {% endif %}
