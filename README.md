@@ -5,8 +5,6 @@
 
 Submission for CapitalOne's Mindsumo [challenge](https://www.mindsumo.com/contests/national-park-api) to Build a Web App that serves as a National Park Service Information Kiosk.
 
-Website can be found [here.](https://www.nadinebrodriguez.com)
-
 ## Tech Stack
 **Backend:**
 - [Django](https://www.djangoproject.com/)
