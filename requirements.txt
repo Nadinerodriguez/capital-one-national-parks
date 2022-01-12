@@ -3,7 +3,7 @@ chardet==3.0.4
 Django==2.2.1
 gunicorn==19.9.0
 idna==2.8
-pipenv==2018.11.26
+pipenv==2022.1.8
 pytz==2019.1
 requests==2.22.0
 sqlparse==0.3.0
